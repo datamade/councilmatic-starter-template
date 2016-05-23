@@ -25,7 +25,11 @@ NOTE: This is not a comprehensive overview of how to customize councilmatic :spe
   :speech_balloon:  
 
 3. **update city-specific settings**  
-  :speech_balloon:  
+  - set your `OCD_JURISDICTION_ID`.
+    you can find the jurisdiction ids at http://ocd.datamade.us/jurisdictions/
+  - set either `OCD_CITY_COUNCIL_ID` or `OCD_CITY_COUNCIL_NAME` - this identifies your city council
+    `OCD_CITY_COUNCIL_ID` will take precedence over `OCD_CITY_COUNCIL_NAME`, but it may make more sense to set `OCD_CITY_COUNCIL_NAME` if your OCD IDs aren't persistent. You can find the name and id of your city council at http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID
+  - :speech_balloon:  
 
 4. **update deployment settings**  
   :speech_balloon:  
