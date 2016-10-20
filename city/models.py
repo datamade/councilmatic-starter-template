@@ -5,3 +5,8 @@ from datetime import datetime
 import pytz
 
 app_timezone = pytz.timezone(settings.TIME_ZONE)
+
+class CityBill(Bill):
+     
+    class Meta:
+        proxy = True

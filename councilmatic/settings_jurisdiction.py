@@ -20,7 +20,7 @@ CITY_VOCAB = {
     'EVENTS': 'Meetings',               # label for the events listing, e.g. 'Events'
 }
 
-APP_NAME = 'chicago'
+APP_NAME = 'city'
 
 
 #########################

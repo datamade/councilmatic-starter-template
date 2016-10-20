@@ -7,3 +7,6 @@ settings_deployment.py
 # Collected Static Files
 static/**
 **/static/images/ocd-person/*.jpg
+
+__pycache__
+downloads
