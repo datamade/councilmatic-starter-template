@@ -1,29 +1,55 @@
 # councilmatic-starter-template
-starter code &amp; documentation for new councilmatic instances
+This repo provides starter code &amp; documentation for new councilmatic instances.
 
-:warning: STATUS: currently in development :warning:  :speech_balloon: parts of
-the documentation that aren't fully fleshed out are marked with a speech
-balloon - if you have questions, do pester us to elaborate & finish the content
+## About Councilmatic
 
-## Some context: a high level overview
+The [councilmatic family](https://www.councilmatic.org/) is a set of web apps for keeping tabs on city representatives and their legislative activity.
 
-The [councilmatic family](https://www.councilmatic.org/) is a set of web apps
-for keeping tabs on local city councils. This template is for creating a
-councilmatic app for a new city.
+Councilmatic started as a Code for America project by Mjumbe Poe, who designed the earliest version of a Councilmatic site for [Philadelphia](http://philly.councilmatic.org/). DataMade then implemented Councilmatic in New York City (in partnership with the Participatory Politics Foundation), Chicago (in partnership with the Sunlight foundation), and Los Angeles (in partnership with the Los Angeles County Metropolitan Transportation Authority).
 
-Councilmatic started as a Code for America project by Mjumbe Poe, for the city
-of Philadelphia. DataMade then implemented Councilmatic for New York City (in
-partnership with the Participatory Politics Foundation) & Chicago (in
-partnership with the Sunlight foundation).
+DataMade built `django-councilmatic` – a django app with core functionality, common across all cities, which implements Open Civic Data (a data standard for describing people, organizations, events, and bills). The OCD data standard and the abstraciton of core functionality into a separate app simplifies the creation of Councilmatic sites.
 
-NYC Councilmatic & Chicago Councilmatic are built on
-[`django-councilmatic`](https://github.com/datamade/django-councilmatic) (a
-django app with core functionality that is common across all cities) &
-Open Civic Data (a data standard for describing people, organizations, events
-and bills). Using a data standard & abstracting out the core
-functionality ultimately makes Councilmatic much easier to re-deploy. This
-template is for building a Councilmatic app on top of `django-councilmatic` &
-the OCD API - analogous to NYC Councimatic & Chicago Councilmatic.
+Use this template to create a councilmatic app for a new city - analogous to DataMade projects, such as NYC Councimatic & Chicago Councilmatic.
+
+## Get started
+
+NOTE: This guide focuses on setting up your app for development. It does not discuss in detail the process of finding, scraping, and importing city data or deploying your site.
+
+### Import data
+
+You need data to build a Councilmatic instance. To do so, you should check that your city's data lives in the Open Civic Data API. Then, you need to write a scraper and an import script for loading data about people, legislation, events, etc. Much of what you need can be found in the [Open Civic Data documentation](https://opencivicdata.readthedocs.io/en/latest/).
+
+### Create your site
+:speech_balloon:
+
+2. **fork this code**
+  :speech_balloon:
+
+2. **install stuff**
+  :speech_balloon:
+
+3. **update city-specific settings**
+  - set your `OCD_JURISDICTION_ID`.
+    you can find the jurisdiction ids at http://ocd.datamade.us/jurisdictions/
+  - set either `OCD_CITY_COUNCIL_ID` or `OCD_CITY_COUNCIL_NAME` - this identifies your city council
+    `OCD_CITY_COUNCIL_ID` will take precedence over `OCD_CITY_COUNCIL_NAME`, but it may make more sense to set `OCD_CITY_COUNCIL_NAME` if your OCD IDs aren't persistent. You can find the name and id of your city council at http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID
+  - :speech_balloon:
+
+4. **update deployment settings**
+  :speech_balloon:
+
+5. **set up your database**
+  :speech_balloon:
+
+6. **import data**
+  :speech_balloon:
+
+7. **run the app!**
+  :speech_balloon:
+
+
+
+
 
 To use this template, you'll need to have your city's data in the Open Civic
 Data API. How you get your data into an instance of the OCD API is up to you.
@@ -56,7 +82,7 @@ NOTE: This is not yet a comprehensive overview of how to customize councilmatic
 git clone https://github.com/datamade/councilmatic-starter-template.git yourcity_councilmatic
 ```
 
-3. **Make a virtualenv and install dependencies**  
+3. **Make a virtualenv and install dependencies**
 
 We recommend using [virtualenv](https://virtualenv.readthedocs.io/en/latest/)
 and
@@ -300,7 +326,7 @@ data from the OCD API. :speech_balloon:
     </tbody>
 </table>
 
-4. **update deployment settings**  
+4. **update deployment settings**
 
 In the `councilmatic` folder you'll find another settings file called
 `settings_deployment.py.example`. Make a copy of it so that you can
@@ -381,12 +407,12 @@ that aren't are:
     </tbody>
 </table>
 
-5. **set up your database**  
+5. **set up your database**
   :speech_balloon:
 
-6. **import data**  
+6. **import data**
   :speech_balloon:
 
-7. **run the app!**  
+7. **run the app!**
   :speech_balloon:
 
