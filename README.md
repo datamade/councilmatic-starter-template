@@ -1,5 +1,5 @@
-# councilmatic-starter-template
-This repo provides starter code &amp; documentation for new councilmatic instances.
+# Councilmatic Starter Template
+This repo provides starter code and documentation for new Councilmatic instances.
 
 ## About Councilmatic
 
