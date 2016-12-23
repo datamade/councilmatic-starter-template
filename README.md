@@ -11,31 +11,31 @@ To simplify redeployment of Councilmatic instances, DataMade identified two nece
 
 Use this template to create a councilmatic app for a new city - analogous to DataMade projects, such as NYC Councimatic & Chicago Councilmatic.
 
-## Get started
+## Getting started: Data
 
 NOTE: This guide focuses on setting up your app for development. It does not discuss in detail the process of finding, scraping, and importing city data or deploying your site.
-
-### Get data
 
 You need data about your city in the Open Civic Data API.
 
 How you get your data into an instance of the OCD API is up to you. What does DataMade do? We use scrapers, which run nightly to update the API by scraping the data from Legistar-backed sites operated by NYC, Chicago, and LA Metro. Your city may be running a Legistar-backed site, and if so, you can checkout [`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper) and the [`pupa`](https://github.com/opencivicdata/pupa) framework to get a head start on scraping those sites.
 
-If you need examples of how to customize your scraper, look at [`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal)) as well as [DataMade](https://datamade.us/), which hosts several municipal-level scrapers. You can find information about what cities and other governmental bodies are already covered at [`http://ocd.datamade.us/jurisdictions/`](http://ocd.datamade.us/jurisdictions/).
+If you need examples of how to customize your scraper, look at [`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal) as well as [DataMade](https://datamade.us/), which hosts several municipal-level scrapers. You can find information about what cities and other governmental bodies are already covered on [the OCD DataMade site](http://ocd.datamade.us/jurisdictions/).
 
-### Create your site
+## Getting started: Create your site
 
-1. **Install OS Level dependencies**
+### Install OS Level dependencies
 
 * Python 3.4
 * PostgreSQL 9.4 +
 
-2. **Clone this project and make it your own**
+
+### Clone this project and make it your own
 ```
 git clone https://github.com/datamade/councilmatic-starter-template.git yourcity_councilmatic
 ```
 
-3. **Make a virtualenv and install dependencies**
+
+### Make a virtualenv and install dependencies
 
 We recommend using [virtualenv](https://virtualenv.readthedocs.io/en/latest/)
 and
@@ -51,9 +51,10 @@ cd yourcity_councilmatic
 pip install -r requirements.txt
 ```
 
-Afterwards, whenever you want to use this virtual environment to do work on your Councilmatic instance, run `workon yourcity_councilmatic`.
+Afterwards, whenever you want to use this virtual environment, run `workon yourcity_councilmatic`.
 
-4. **Rename the "city" app**
+
+### Rename the "city" app
 
 Inside the git repository that you cloned above, you should see a folder called `city`. Rename that to something that makes sense for your project, e.g., "chicago."
 
@@ -77,7 +78,8 @@ Then, change the TIME_ZONE. You can use [this list](https://en.wikipedia.org/wik
 TIME_ZONE = 'America/Chicago'
 ```
 
-5. **update city-specific settings**
+
+### Update city-specific settings
 
 In the `councilmatic` folder you'll find a settings file called `settings_jursidiction.py`. These settings tell your Councilmatic instance how to populate different parts of the UI and get fresh data from the OCD API.
 
@@ -273,7 +275,7 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
     </tbody>
 </table>
 
-6. **update deployment settings**
+### Update deployment settings
 
 In the `councilmatic` folder you'll find another settings file called `settings_deployment.py.example`. Make a copy of it so that you can customize it for your city:
 
@@ -344,7 +346,7 @@ This file is important! It's where you keep parts of your Councilmatic that you 
 
 
 
-7. **Setup your database**
+### Setup your database
 
 Before we can run the website, we need to create a database.
 
@@ -379,7 +381,7 @@ The import_data command has some more nuance than the description above, for the
 
 [N.B. Earlier releases of django-councilmatic (< 0.7) use `loaddata`, instead of `import_data` ]
 
-## Running NYC Councilmatic locally
+## Running Councilmatic locally
 
 Now, you are ready to run your unique version of Councilmatic!
 
