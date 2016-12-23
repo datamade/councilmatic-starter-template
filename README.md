@@ -15,62 +15,16 @@ Use this template to create a councilmatic app for a new city - analogous to Dat
 
 NOTE: This guide focuses on setting up your app for development. It does not discuss in detail the process of finding, scraping, and importing city data or deploying your site.
 
-### Import data
+### Get data
 
-You need data to build a Councilmatic instance. To do so, you should check that your city's data lives in the Open Civic Data API. Then, you need to write a scraper and an import script for loading data about people, legislation, events, etc. Much of what you need can be found in the [Open Civic Data documentation](https://opencivicdata.readthedocs.io/en/latest/).
+You need data about your city in the Open Civic Data API to build a Councilmatic instance.
+
+How you get your data into an instance of the OCD API is up to you. What does DataMade do? We use scrapers, which run nightly to update the API by scraping the data from Legistar-backed sites operated by NYC, Chicago, and LA Metro. Your city may be running a Legistar backed site, and if so, you can checkout [`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper) and the [`pupa`](https://github.com/opencivicdata/pupa) framework to get a head
+start on scraping those sites.
+
+If you need examples of how to customize your scraper, look at [`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal)) as well as [DataMade](https://datamade.us/), which hosts several municipal-level scrapers. You can find information about what cities and other governmental bodies are already covered at [`http://ocd.datamade.us/jurisdictions/`](http://ocd.datamade.us/jurisdictions/).
 
 ### Create your site
-:speech_balloon:
-
-2. **fork this code**
-  :speech_balloon:
-
-2. **install stuff**
-  :speech_balloon:
-
-3. **update city-specific settings**
-  - set your `OCD_JURISDICTION_ID`.
-    you can find the jurisdiction ids at http://ocd.datamade.us/jurisdictions/
-  - set either `OCD_CITY_COUNCIL_ID` or `OCD_CITY_COUNCIL_NAME` - this identifies your city council
-    `OCD_CITY_COUNCIL_ID` will take precedence over `OCD_CITY_COUNCIL_NAME`, but it may make more sense to set `OCD_CITY_COUNCIL_NAME` if your OCD IDs aren't persistent. You can find the name and id of your city council at http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID
-  - :speech_balloon:
-
-4. **update deployment settings**
-  :speech_balloon:
-
-5. **set up your database**
-  :speech_balloon:
-
-6. **import data**
-  :speech_balloon:
-
-7. **run the app!**
-  :speech_balloon:
-
-
-
-
-
-To use this template, you'll need to have your city's data in the Open Civic
-Data API. How you get your data into an instance of the OCD API is up to you.
-In the case of New York City and Chicago, there are scrapers which run nightly
-to update the API by scraping the data from the Legistar backed sites operated
-by those cities. If the city that you are interested in building a Councilmatic
-instance for happens to be running a Legistar backed site, checkout
-[`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper)
-and the [`pupa`](https://github.com/opencivicdata/pupa) framework to get a head
-start on scraping those sites (for examples of how to customize your scraper,
-look at
-[`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal)).
-[DataMade](https://datamade.us/) hosts several municipal level scrapers.
-Information about what cities and other governmental bodies are already covered
-can be seen at
-[`http://ocd.datamade.us/jurisdictions/`](http://ocd.datamade.us/jurisdictions/).
-
-## Quick start guide
-
-NOTE: This is not yet a comprehensive overview of how to customize councilmatic
-:speech_balloon: or how to deploy a live site :speech_balloon:.
 
 1. **Install OS Level dependencies**
 
