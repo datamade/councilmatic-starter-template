@@ -111,7 +111,7 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
                 <p>You can find the name and id of your city council on the <a href="http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID">Datamade OCD API</a> or by using the same path to your own OCD API.</p>
             </td>
             <td>ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a</td>
-            <td>Only if OCD_CITY_COUNCIL_NAME is set</td>
+            <td>Only if you set OCD_CITY_COUNCIL_NAME</td>
         </tr>
         <tr>
             <td>OCD_CITY_COUNCIL_NAME</td>
@@ -119,7 +119,7 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
                 See OCD_CITY_COUNCIL_ID
             </td>
             <td>Chicago City Government</td>
-            <td>Only if OCD_CITY_COUNCIL_ID is set</td>
+            <td>Only if you set OCD_CITY_COUNCIL_ID</td>
         </tr>
         <tr>
             <td>CITY_COUNCIL_NAME</td>
@@ -140,7 +140,7 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
             <td>No</td>
         </tr>
         <tr>
-            <td>`CITY_NAME`</td>
+            <td>CITY_NAME</td>
             <td>
                 Complete, pretty name of the jurisdiction
             </td>
@@ -148,7 +148,7 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
             <td>No</td>
         </tr>
         <tr>
-            <td>`CITY_NAME_SHORT`</td>
+            <td>CITY_NAME_SHORT</td>
             <td>
                 Shortened version of the jurisdiction name
             </td>
@@ -156,7 +156,7 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
             <td>No</td>
         </tr>
         <tr>
-            <td>`CITY_VOCAB`</td>
+            <td>CITY_VOCAB</td>
             <td>
                 A dictionary telling Councilmatic how to refer to
                 different entities in the jurisdiction
@@ -165,40 +165,39 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
             <td>No</td>
         </tr>
         <tr>
-            <td>`CITY_VOCAB['MUNICIPAL_DISTRICT']`</td>
+            <td>CITY_VOCAB['MUNICIPAL_DISTRICT']</td>
             <td>
-                The name of a district into which the jurisdiction is divided
+                The name of the city sections, which could be a "ward", "sector", "district", etc.
             </td>
             <td>Ward</td>
             <td>No</td>
         </tr>
         <tr>
-            <td>`CITY_VOCAB['SOURCE']`</td>
+            <td>CITY_VOCAB['SOURCE']</td>
             <td>
-                The name of the entity responsible for the source data
-                that your Councilmatic will be based upon.
+                The name of the entity responsible for the source data that your Councilmatic will be based upon.
             </td>
             <td>Chicago City Clerk</td>
             <td>No</td>
         </tr>
         <tr>
-            <td>`CITY_VOCAB['COUNCIL_MEMBER']`</td>
+            <td>CITY_VOCAB['COUNCIL_MEMBER']</td>
             <td>
-                The name of a member of the legislative body your Councilmatic is tracking.
+                The name of a member of the legislative body that your Councilmatic tracks.
             </td>
             <td>Alderman</td>
             <td>No</td>
         </tr>
         <tr>
-            <td>`CITY_VOCAB['COUNCIL_MEMBERS']`</td>
+            <td>CITY_VOCAB['COUNCIL_MEMBERS']</td>
             <td>
-                Plural form of the name of a member of the legislative body your Councilmatic is tracking.
+                Plural form of the name of a member of the legislative body your Councilmatic tracks.
             </td>
             <td>Aldermen</td>
             <td>No</td>
         </tr>
         <tr>
-            <td>`CITY_VOCAB['EVENTS']`</td>
+            <td>CITY_VOCAB['EVENTS']</td>
             <td>
                 The name of the meetings that members of the legislative body attend.
             </td>
@@ -206,48 +205,47 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
             <td>No</td>
         </tr>
         <tr>
-            <td>`APP_NAME`</td>
+            <td>APP_NAME</td>
             <td>
-                The name of the folder where your jurisdiction
-                specific code lives.
+                The name of the folder where your jurisdiction specific code lives.
             </td>
             <td>chicago</td>
             <td>No</td>
         </tr>
         <tr>
-            <td>`SITE_META`</td>
+            <td>SITE_META</td>
             <td>
-                Dictionary containing values used in `meta` tags.
+                Dictionary containing values stored in <code>meta</code> tags.
             </td>
             <td>(See individual values below)</td>
             <td>Yes</td>
         </tr>
         <tr>
-            <td>`SITE_META['site_name']`</td>
+            <td>SITE_META['site_name']</td>
             <td>
-                Used for the `og:name`, `og:title`, and `twitter:title` meta tags
+                Used for the <code>og:name</code>, <code>og:title</code>, and <code>twitter:title</code> meta tags
             </td>
             <td>Chicago Councilmatic</td>
             <td>Yes</td>
         </tr>
         <tr>
-            <td>`SITE_META['site_desc']`</td>
+            <td>SITE_META['site_desc']</td>
             <td>
-                Used for the `description`, `og:description`, and `twitter:description` meta tags
+                Used for the <code>description</code>, <code>og:description</code>, and <code>twitter:description</code> meta tags
             </td>
             <td>City Council, demystified. Keep tabs on Chicago legislation, aldermen, & meetings.</td>
             <td>Yes</td>
         </tr>
         <tr>
-            <td>`SITE_META['site_author']`</td>
+            <td>SITE_META['site_author']</td>
             <td>
-                Used for the `author` meta tag
+                Used for the <code>author</code> meta tag
             </td>
             <td>DataMade</td>
             <td>Yes</td>
         </tr>
         <tr>
-            <td>`SITE_META['site_url']`</td>
+            <td>SITE_META['site_url']</td>
             <td>
                 Used to build absolute URLs for the meta tags.
             </td>
@@ -255,17 +253,17 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
             <td>Yes</td>
         </tr>
         <tr>
-            <td>`SITE_META['twitter_site']`</td>
+            <td>SITE_META['twitter_site']</td>
             <td>
-                Used for `twitter:site` meta tag.
+                Used for <code>twitter:site</code> meta tag.
             </td>
             <td>@councilmatic</td>
             <td>Yes</td>
         </tr>
         <tr>
-            <td>`SITE_META['twitter_creator']`</td>
+            <td>SITE_META['twitter_creator']</td>
             <td>
-                Used for `twitter:creator` meta tag.
+                Used for <code>twitter:creator</code>  meta tag.
             </td>
             <td>@DataMadeCo</td>
             <td>Yes</td>
@@ -275,22 +273,13 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
 
 4. **update deployment settings**
 
-In the `councilmatic` folder you'll find another settings file called
-`settings_deployment.py.example`. Make a copy of it so that you can
-customize it for your city:
+In the `councilmatic` folder you'll find another settings file called `settings_deployment.py.example`. Make a copy of it so that you can customize it for your city:
 
 ```
 cp councilmatic/settings_deployment.py.example councilmatic/settings_deployment.py
 ```
 
-This is where you'll keep the parts of your Councilmatic that you
-don't want to place into version control (things like passwords,
-database connection strings, etc that will vary based on where
-the app is running and which you probably won't want other people to
-know). Most of them are generic Django settings which you can look up
-in the [Django
-docs](https://docs.djangoproject.com/en/1.10/ref/settings/). The ones
-that aren't are:
+This file is important! It's where you keep parts of your Councilmatic that you should end up in version control (e.g., passwords, database connection strings, etc., which will vary based on where the app is running and which you probably won't want other people to know). Most of these variables are generic Django settings, which you can look up in the [Django docs](https://docs.djangoproject.com/en/1.10/ref/settings/); this table shows only the variables that you need to customize.
 
 <table>
     <thead>
@@ -302,25 +291,22 @@ that aren't are:
     </thead>
     <tbody>
         <tr>
-            <td>`HAYSTACK_CONNECTIONS`</td>
+            <td>HAYSTACK_CONNECTIONS</td>
             <td>
                 Dictionary of connections used by Haystack. More on
-                that
-                [here](http://django-haystack.readthedocs.io/en/v2.5.0/tutorial.html#modify-your-settings-py)
+                that <a href="http://django-haystack.readthedocs.io/en/v2.5.0/tutorial.html#modify-your-settings-py">here</a>.
             </td>
             <td>No</td>
         </tr>
         <tr>
-            <td>`FLUSH_KEY`</td>
+            <td>FLUSH_KEY</td>
             <td>
-                Used by the [`flush`
-                view](https://github.com/datamade/django-councilmatic/blob/master/councilmatic_core/views.py#L426-L434)
-                in `django-councilmatic` to clear Django's cache.
+                Used by the <a href="https://github.com/datamade/django-councilmatic/blob/master/councilmatic_core/views.py#L426-L434">`flush` view</a>in `django-councilmatic` to clear Django's cache.
             </td>
             <td>No</td>
         </tr>
         <tr>
-            <td>`DISQUS_SHORTNAME`</td>
+            <td>DISQUS_SHORTNAME</td>
             <td>
                 Will cause Disqus comment threads to be attached to
                 individual bill pages.
@@ -328,14 +314,14 @@ that aren't are:
             <td>Yes</td>
         </tr>
         <tr>
-            <td>`ANALYTICS_TRACKING_CODE`</td>
+            <td>ANALYTICS_TRACKING_CODE</td>
             <td>
                 Google Analytics property ID
             </td>
             <td>Yes</td>
         </tr>
         <tr>
-            <td>`HEADSHOT_PATH`</td>
+            <td>HEADSHOT_PATH</td>
             <td>
                 Absolute path to where the data loader will save
                 images of members of the legislative body that are
@@ -344,7 +330,7 @@ that aren't are:
             <td>Yes</td>
         </tr>
         <tr>
-            <td>`EXTRA_APPS`</td>
+            <td>EXTRA_APPS</td>
             <td>
                 List of additional django apps that you want to use
                 with your custom councilmatic
