@@ -94,12 +94,12 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
             <td>
                 For scrapers hosted on the Datamade OCD API, you can
                 find the jurisdiction id <a href="http://ocd.datamade.us/jurisdictions/">here</a>.
-
+                <br>
                 Otherwise, look at the `/jurisdictions/` endpoint of the <a href="https://github.com/opencivicdata/api.opencivicdata.org">OCD
-                API</a>]
-
+                API</a>
+                <br>
                 <strong>Example<strong>
-
+                <br>
                 ocd-jurisdiction/country:us/state:il/place:chicago/government
             </td>
             <!-- <td>ocd-jurisdiction/country:us/state:il/place:chicago/government</td> -->
