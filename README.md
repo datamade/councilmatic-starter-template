@@ -7,7 +7,7 @@ The [councilmatic family](https://www.councilmatic.org/) is a set of web apps fo
 
 Councilmatic started as a Code for America project by Mjumbe Poe, who designed the earliest version of a Councilmatic site for [Philadelphia](http://philly.councilmatic.org/). DataMade then implemented Councilmatic in New York City (in partnership with the Participatory Politics Foundation), Chicago (in partnership with the Sunlight foundation), and Los Angeles (in partnership with the Los Angeles County Metropolitan Transportation Authority).
 
-DataMade built `django-councilmatic` – a django app with core functionality, common across all cities, which implements Open Civic Data (a data standard for describing people, organizations, events, and bills). The OCD data standard and the abstraciton of core functionality into a separate app simplifies the creation of Councilmatic sites.
+To simplify redeployment of Councilmatic instances, DataMade identified two necessities: (1) Open Civic Data, a data standard for describing people, organizations, events, and bills, and (2) the abstraciton of core functionality into a separate app. DataMade thus built `django-councilmatic` – a django app with base functionality, common across all cities, which implements the OCD data standard.
 
 Use this template to create a councilmatic app for a new city - analogous to DataMade projects, such as NYC Councimatic & Chicago Councilmatic.
 
@@ -93,13 +93,13 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
             <td>`OCD_JURISDICTION_ID`</td>
             <td>
                 For scrapers hosted on the Datamade OCD API, you can
-                find the jurisdiction id at
-                [http://ocd.datamade.us/jurisdictions/](http://ocd.datamade.us/jurisdictions/).
+                find the jurisdiction id <a href="http://ocd.datamade.us/jurisdictions/">here</a>.
 
-                Otherwise, look at the `/jurisdictions/` endpoint of the [OCD
-                API](https://github.com/opencivicdata/api.opencivicdata.org).
+                Otherwise, look at the `/jurisdictions/` endpoint of the <a href="https://github.com/opencivicdata/api.opencivicdata.org">OCD
+                API</a>]
 
-                **Example**
+                <strong>Example<strong>
+
                 ocd-jurisdiction/country:us/state:il/place:chicago/government
             </td>
             <!-- <td>ocd-jurisdiction/country:us/state:il/place:chicago/government</td> -->
