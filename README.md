@@ -51,6 +51,8 @@ cd yourcity_councilmatic
 pip install -r requirements.txt
 ```
 
+Afterwards, whenever you want to use this virtual environment to do work on your Councilmatic instance, run `workon yourcity_councilmatic`.
+
 4. **Rename the "city" app**
 
 Inside the git repository that you cloned above, you should see a folder called `city`. Rename that to something that makes sense for your project, e.g., "chicago."
@@ -271,7 +273,7 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
     </tbody>
 </table>
 
-4. **update deployment settings**
+6. **update deployment settings**
 
 In the `councilmatic` folder you'll find another settings file called `settings_deployment.py.example`. Make a copy of it so that you can customize it for your city:
 
@@ -340,12 +342,170 @@ This file is important! It's where you keep parts of your Councilmatic that you 
     </tbody>
 </table>
 
-5. **set up your database**
-  :speech_balloon:
 
-6. **import data**
-  :speech_balloon:
 
-7. **run the app!**
-  :speech_balloon:
+7. **Setup your database**
 
+Before we can run the website, we need to create a database.
+
+```bash
+createdb yourcity_councilmatic
+```
+
+Then, run migrations. (Be sure that you are "working on" the correct virtual environment.)
+
+```bash
+python manage.py migrate --no-initial-data
+```
+
+Create an admin user - set a username & password when prompted.
+
+```bash
+python manage.py createsuperuser
+```
+
+
+## Import data from the Open Civic Data API
+
+The django-councilmatic app comes with a import_data management command, which populates bills, people, committees, and events, loaded from the OCD API. You can explore the nitty-gritty of this code [here](https://github.com/datamade/django-councilmatic/blob/master/councilmatic_core/management/commands/import_data.py). Running `import_data` will take a while, depending on volume (e.g., NYC may require around half an hour).
+
+```bash
+python manage.py import_data
+```
+
+By default, the import_data command carefully looks at the OCD API; it is a smart management command. If you already have bills loaded, it will not look at everything on the API - it will look at the most recently updated bill in your database, see when that bill was last updated on the OCD API, and then look through everything on the API that was updated after that point. If you'd like to load things that are older than what you currently have loaded, you can run the import_data management command with a `--delete` option, which removes everything from your database before loading.
+
+The import_data command has some more nuance than the description above, for the different types of data it loads. If you have any questions, open up an issue and pester us to write better documentation.
+
+[N.B. Earlier releases of django-councilmatic (< 0.7) use `loaddata`, instead of `import_data` ]
+
+## Running NYC Councilmatic locally
+
+Now, you are ready to run your unique version of Councilmatic!
+
+``` bash
+python manage.py runserver
+```
+
+Navigate to [http://localhost:8000/](http://localhost:8000/).
+
+## Setup Search
+
+**Install Open JDK or update Java**
+
+On Ubuntu:
+
+``` bash
+$ sudo apt-get update
+$ sudo apt-get install openjdk-7-jre-headless
+```
+
+On OS X:
+
+1. Download latest Java from
+[http://java.com/en/download/mac_download.jsp?locale=en](http://java.com/en/download/mac_download.jsp?locale=en)
+2. Follow normal install procedure
+3. Change system Java to use the version you just installed:
+
+    ``` bash
+    sudo mv /usr/bin/java /usr/bin/java16
+    sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
+    ```
+
+**Download & setup Solr**
+
+``` bash
+wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
+tar -xvf solr-4.10.4.tgz
+sudo cp -R solr-4.10.4/example /opt/solr
+
+# Copy schema.xml for this app to solr directory
+sudo cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+```
+
+**Run Solr**
+```bash
+# Next, start the java application that runs solr
+# Do this in another terminal window & keep it running
+# If you see error output, somethings wrong
+cd /opt/solr
+sudo java -jar start.jar
+```
+
+**Index the database**
+```bash
+# back in the nyc-councilmatic directory:
+python manage.py rebuild_index
+```
+
+**OPTIONAL: Install and configure Jetty for Solr**
+
+Just running Solr as described above is probably OK in a development setting.
+To deploy Solr in production, you'll want to use something like Jetty. Here's
+how you'd do that on Ubuntu:
+
+``` bash
+sudo apt-get install jetty
+
+# Backup stock init.d script
+sudo mv /etc/init.d/jetty ~/jetty.orig
+
+# Get init.d script suggested by Solr docs
+sudo cp solr_scripts/jetty.sh /etc/init.d/jetty
+sudo chown root.root /etc/init.d/jetty
+sudo chmod 755 /etc/init.d/jetty
+
+# Add Solr specific configs to /etc/default/jetty
+sudo cp solr_scripts/jetty.conf /etc/default/jetty
+
+# Change ownership of the Solr directory so Jetty can get at it
+sudo chown -R jetty.jetty /opt/solr
+
+# Start up Solr
+sudo service jetty start
+
+# Solr should now be running on port 8983
+```
+
+**Regenerate Solr schema**
+
+While developing, if you need to make changes to the fields that are getting
+indexed or how they are getting indexed, you'll need to regenerate the
+schema.xml file that Solr uses to make it's magic. Here's how that works:
+
+```
+python manage.py build_solr_schema > solr_scripts/schema.xml
+cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+```
+
+In order for Solr to use the new schema file, you'll need to restart it.
+
+**Using Solr for more than one Councilmatic on the same server**
+
+If you intend to run more than one instance of Councilmatic on the same server,
+you'll need to take a look at [this README](solr_scripts/README.md) to make sure you're
+configuring things properly.
+
+## Team
+
+* Forest Gregg, DataMade - Open Civic Data (OCD) and Legistar scraping
+* Cathy Deng, DataMade - data models, front end
+* Derek Eder, DataMade - front end
+* Eric van Zanten, DataMade - search and dev ops
+* Regina Compton, DataMade - developer
+
+## Errors/Bugs
+
+If something is not behaving intuitively, it is a bug, and should be reported.
+Report it [here](https://github.com/datamade/councilmatic-starter-template/issues).
+
+## Note on Patches/Pull Requests
+
+* Fork the project.
+* Make your feature addition or bug fix.
+* Commit - please be descriptive, but concise.
+* Send a pull request. Bonus points for well-titled topic branches!
+
+## Copyright
+
+Copyright (c) 2015 Participatory Politics Foundation and DataMade. Released under the [MIT License](https://github.com/datamade/councilmatic-starter-template/blob/master/LICENSE).
