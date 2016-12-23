@@ -84,50 +84,45 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <!-- <th>Example value</th> -->
+            <th>Example value</th>
             <th>Optional?</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>`OCD_JURISDICTION_ID`</td>
+            <td>OCD_JURISDICTION_ID</td>
             <td>
                 <p>For scrapers hosted on the Datamade OCD API, you can
-                find the jurisdiction id <a href="http://ocd.datamade.us/jurisdictions/">here</a>.
-                </p>>
-                <p>Otherwise, look at the `/jurisdictions/` endpoint of the <a href="https://github.com/opencivicdata/api.opencivicdata.org">OCD
-                API</a></p>
-                <strong>Example</strong>
-                <br>
-                ocd-jurisdiction/country:us/state:il/place:chicago/government
+                find the jurisdiction id <a href="http://ocd.datamade.us/jurisdictions/">here</a>.</p>
+
+                <p>Otherwise, look at the <code>/jurisdictions/</code> endpoint of the <a href="https://github.com/opencivicdata/api.opencivicdata.org">OCD API</a>.</p>
             </td>
-            <!-- <td>ocd-jurisdiction/country:us/state:il/place:chicago/government</td> -->
+            <td>ocd-jurisdiction/country:us/state:il/place:chicago/government</td>
             <td>No</td>
         </tr>
         <tr>
-            <td>`OCD_CITY_COUNCIL_ID`</td>
+            <td>OCD_CITY_COUNCIL_ID</td>
             <td>
-                Set either `OCD_CITY_COUNCIL_ID` or `OCD_CITY_COUNCIL_NAME` - this
-                identifies your city council `OCD_CITY_COUNCIL_ID` will take precedence over
-                `OCD_CITY_COUNCIL_NAME`, but it may make more sense to set
-                `OCD_CITY_COUNCIL_NAME` if your OCD IDs aren't persistent. You can find the
-                name and id of your city council on the Datamade OCD API at
-                http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID
-                (or using the same path on your own OCD API)
+                <p>Set either <code>OCD_CITY_COUNCIL_ID</code> or <code>OCD_CITY_COUNCIL_NAME</code> - this
+                identifies your city council.</p>
+
+                <p><code>OCD_CITY_COUNCIL_ID</code> will take precedence over<code>OCD_CITY_COUNCIL_NAME</code>. But if your OCD IDs are not persistent, it may make more sense to set <code>OCD_CITY_COUNCIL_NAME</code>.</p>
+
+                <p>You can find the name and id of your city council on the <a href="http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID">Datamade OCD API</a> or by using the same path to your own OCD API.</p>
             </td>
             <td>ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a</td>
-            <td>Only if `OCD_CITY_COUNCIL_NAME` is set</td>
+            <td>Only if OCD_CITY_COUNCIL_NAME is set</td>
         </tr>
         <tr>
-            <td>`OCD_CITY_COUNCIL_NAME`</td>
+            <td>OCD_CITY_COUNCIL_NAME</td>
             <td>
-                See `OCD_CITY_COUNCIL_ID`
+                See OCD_CITY_COUNCIL_ID
             </td>
             <td>Chicago City Government</td>
-            <td>Only if `OCD_CITY_COUNCIL_ID` is set</td>
+            <td>Only if OCD_CITY_COUNCIL_ID is set</td>
         </tr>
         <tr>
-            <td>`CITY_COUNCIL_NAME`</td>
+            <td>CITY_COUNCIL_NAME</td>
             <td>
                 Display name for the legislative body you'll be tracking.
             </td>
@@ -135,7 +130,7 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
             <td>No</td>
         </tr>
         <tr>
-            <td>`LEGISLATIVE_SESSIONS`</td>
+            <td>LEGISLATIVE_SESSIONS</td>
             <td>
                 A list of years that tells Councilmiatic when a new
                 body is elected and which of these sessions you have
