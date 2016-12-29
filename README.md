@@ -5,23 +5,23 @@ This repo provides starter code and documentation for new Councilmatic instances
 
 The [councilmatic family](https://www.councilmatic.org/) is a set of web apps for keeping tabs on city representatives and their legislative activity.
 
-Councilmatic started as a Code for America project by Mjumbe Poe, who designed the earliest version of a Councilmatic site for [Philadelphia](http://philly.councilmatic.org/). DataMade then implemented Councilmatic in New York City (in partnership with the Participatory Politics Foundation), Chicago (in partnership with the Sunlight foundation), and Los Angeles (in partnership with the Los Angeles County Metropolitan Transportation Authority).
+Councilmatic started as a Code for America project by Mjumbe Poe, who designed the earliest version of a Councilmatic site – [Councilmatic Philadelphia](http://philly.councilmatic.org/). DataMade then implemented Councilmatic in New York City (in partnership with the Participatory Politics Foundation), Chicago (in partnership with the Sunlight foundation), and Los Angeles (in partnership with the Los Angeles County Metropolitan Transportation Authority).
 
-To simplify redeployment of Councilmatic instances, DataMade identified two necessities: (1) Open Civic Data, a data standard for describing people, organizations, events, and bills, and (2) the abstraciton of core functionality into a separate app. DataMade thus built `django-councilmatic` – a django app with base functionality, common across all cities, which implements the OCD data standard.
+To simplify redeployment of Councilmatic instances, DataMade identified two necessities: (1) Open Civic Data, a data standard for describing people, organizations, events, and bills, and (2) the abstraciton of core functionality into a separate app. And so, DataMade built `django-councilmatic` – [a django app](https://github.com/datamade/django-councilmatic) with base functionality, common across all cities, which implements the OCD data standard.
 
-Use this template to create a councilmatic app for a new city - analogous to DataMade projects, such as NYC Councimatic & Chicago Councilmatic.
+With this template, you can create a Councilmatic site for your own city, built using the `django-councilmatic` app. Read on!
 
-## Getting started: Data
-
-NOTE: This guide focuses on setting up your app for development. It does not discuss in detail the process of finding, scraping, and importing city data or deploying your site.
+## Finding Data
 
 You need data about your city in the Open Civic Data API.
 
-How you get your data into an instance of the OCD API is up to you. What does DataMade do? We use scrapers, which run nightly to update the API by scraping the data from Legistar-backed sites operated by NYC, Chicago, and LA Metro. Your city may be running a Legistar-backed site, and if so, you can checkout [`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper) and the [`pupa`](https://github.com/opencivicdata/pupa) framework to get a head start on scraping those sites.
+How you get your data into an instance of the OCD API is up to you. What does DataMade do? We use scrapers, which run nightly to update the API by scraping data from Legistar-backed sites operated by the cities for which we built Councilmatic. Your city may be running a Legistar-backed site, and if so, you can checkout [`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper) and the [`pupa`](https://github.com/opencivicdata/pupa) framework to get a head start on scraping.
 
 If you need examples of how to customize your scraper, look at [`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal) as well as [DataMade](https://datamade.us/), which hosts several municipal-level scrapers. You can find information about what cities and other governmental bodies are already covered on [the OCD DataMade site](http://ocd.datamade.us/jurisdictions/).
 
 ## Getting started: Create your site
+
+NOTE: This guide focuses on setting up your app for development. It does not discuss in detail the process of finding, scraping, and importing city data or deploying your site.
 
 ### Install OS Level dependencies
 
@@ -51,18 +51,21 @@ cd yourcity_councilmatic
 pip install -r requirements.txt
 ```
 
-Afterwards, whenever you want to use this virtual environment, run `workon yourcity_councilmatic`.
+Afterwards, whenever you want to use this virtual environment, run:
 
+```bash
+workon yourcity_councilmatic
+```
 
 ### Rename the "city" app
 
-Inside the git repository that you cloned above, you should see a folder called `city`. Rename that to something that makes sense for your project, e.g., "chicago."
+Inside the git repository that you cloned above, you should see a folder called `city`. Rename this folder to something that makes sense for your project, e.g., "chicago."
 
 ```bash
 mv city chicago
 ```
 
-Now, update the main settings file - `councilmatic/settings.py`. First, add the new name of the folder that you just changed to INSTALLED_APPS.
+Now, update the main settings file - `councilmatic/settings.py`. First, in `INSTALLED_APPS`, add the name of the folder that you just renamed:
 
 ```python
 INSTALLED_APPS = (
@@ -81,7 +84,7 @@ TIME_ZONE = 'America/Chicago'
 
 ### Update city-specific settings
 
-In the `councilmatic` folder you'll find a settings file called `settings_jursidiction.py`. These settings tell your Councilmatic instance how to populate different parts of the UI and get fresh data from the OCD API.
+Look for `councilmatic/settings_jursidiction.py`. This settings file tells your Councilmatic instance how to populate different parts of the UI and get fresh data from the OCD API. The following table explains why and how to adjust these values.
 
 <table>
     <thead>
@@ -277,13 +280,13 @@ In the `councilmatic` folder you'll find a settings file called `settings_jursid
 
 ### Update deployment settings
 
-In the `councilmatic` folder you'll find another settings file called `settings_deployment.py.example`. Make a copy of it so that you can customize it for your city:
+Look for `councilmatic/settings_deployment.py.example`. Make a copy of it so that you can customize it for your city:
 
 ```
 cp councilmatic/settings_deployment.py.example councilmatic/settings_deployment.py
 ```
 
-This file is important! It's where you keep parts of your Councilmatic that you should end up in version control (e.g., passwords, database connection strings, etc., which will vary based on where the app is running and which you probably won't want other people to know). Most of these variables are generic Django settings, which you can look up in the [Django docs](https://docs.djangoproject.com/en/1.10/ref/settings/); this table shows only the variables that you need to customize.
+This file is important! It's where you keep the parts of your Councilmatic that should not end up in version control (e.g., passwords, database connection strings, etc., which will vary based on where the app is running and which you probably won't want other people to know). Most of these variables are generic Django settings, which you can look up in the [Django docs](https://docs.djangoproject.com/en/1.10/ref/settings/); but some of these variables require customization. This table shows only the variables that you need to customize.
 
 <table>
     <thead>
@@ -305,7 +308,7 @@ This file is important! It's where you keep parts of your Councilmatic that you 
         <tr>
             <td>FLUSH_KEY</td>
             <td>
-                Used by the <a href="https://github.com/datamade/django-councilmatic/blob/master/councilmatic_core/views.py#L426-L434">`flush` view</a>in `django-councilmatic` to clear Django's cache.
+                Used by the `flush` view in `django-councilmatic` to clear Django's cache.
             </td>
             <td>No</td>
         </tr>
@@ -360,7 +363,7 @@ Then, run migrations. (Be sure that you are "working on" the correct virtual env
 python manage.py migrate --no-initial-data
 ```
 
-Create an admin user - set a username & password when prompted.
+Create an admin user. Set a username and password when prompted.
 
 ```bash
 python manage.py createsuperuser
@@ -369,7 +372,9 @@ python manage.py createsuperuser
 
 ## Import data from the Open Civic Data API
 
-The django-councilmatic app comes with a import_data management command, which populates bills, people, committees, and events, loaded from the OCD API. You can explore the nitty-gritty of this code [here](https://github.com/datamade/django-councilmatic/blob/master/councilmatic_core/management/commands/import_data.py). Running `import_data` will take a while, depending on volume (e.g., NYC may require around half an hour).
+The django-councilmatic app comes with a import_data management command, which populates bills, people, committees, and events, loaded from the OCD API. You can explore the nitty-gritty of this code [here](https://github.com/datamade/django-councilmatic/blob/master/councilmatic_core/management/commands/import_data.py). Note: Earlier releases of django-councilmatic (< 0.7) use `loaddata`, instead of `import_data`.
+
+Running `import_data` will take a while, depending on volume (e.g., NYC may require around half an hour).
 
 ```bash
 python manage.py import_data
@@ -379,7 +384,6 @@ By default, the import_data command carefully looks at the OCD API; it is a smar
 
 The import_data command has some more nuance than the description above, for the different types of data it loads. If you have any questions, open up an issue and pester us to write better documentation.
 
-[N.B. Earlier releases of django-councilmatic (< 0.7) use `loaddata`, instead of `import_data` ]
 
 ## Running Councilmatic locally
 
@@ -391,9 +395,11 @@ python manage.py runserver
 
 Navigate to [http://localhost:8000/](http://localhost:8000/).
 
-## Setup Search
+## Setup search
 
-**Install Open JDK or update Java**
+On a Councilmatic site, users can search bills according to given query parameters. To power our searches, we use [Solr](http://lucene.apache.org/solr/), an open source tool, written in Java.
+
+**Requirements: Open JDK or Java**
 
 On Ubuntu:
 
@@ -502,6 +508,8 @@ If something is not behaving intuitively, it is a bug, and should be reported.
 Report it [here](https://github.com/datamade/councilmatic-starter-template/issues).
 
 ## Note on Patches/Pull Requests
+
+We welcome your ideas and feedback! Here's how to make a contribution:
 
 * Fork the project.
 * Make your feature addition or bug fix.
