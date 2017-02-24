@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'haystack',
-    'city',
+    '{{cookiecutter.city}}',
     'councilmatic_core',
 )
 
