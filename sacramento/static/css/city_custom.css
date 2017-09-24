@@ -1,2 +1,6 @@
 /* city-specific css lives here */
 /* anything in this file will override custom.css in django-councilmatic */
+#section-photo {
+  background: url("/static/images/h-lai-sacramento.jpg") no-repeat;
+  background-size: 100% 100%;
+}
