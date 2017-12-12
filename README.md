@@ -369,6 +369,9 @@ Create an admin user. Set a username and password when prompted.
 python manage.py createsuperuser
 ```
 
+### Add a favicon
+
+Get an image (suggested 310x310), and transform it in device-specific favicon images [using this site](http://www.favicomatic.com/). Then, move the images into `<city_app>/static/images/icons`.
 
 ## Import data from the Open Civic Data API
 
