@@ -426,7 +426,7 @@ On OS X:
 **Download & setup Solr**
 
 ``` bash
-wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
+wget http://archive.apache.org/dist/lucene/solr/4.10.4/solr-4.10.4.tgz
 tar -xvf solr-4.10.4.tgz
 sudo cp -R solr-4.10.4/example /opt/solr
 
