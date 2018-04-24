@@ -1,0 +1,21 @@
+{
+  "city": "chicago",
+  "ocd_jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+  "ocd_city_council_id": "ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a",
+  "city_council_name": "Chicago City Council",
+  "city_name": "Chicago",
+  "city_name_short": "Chicago",
+  "legislative_sessions": {"years": [2017]},
+  "time_zone": "America/Chicago",
+  "city_vocab_municipal_district": "Ward",
+  "city_vocab_source": "Chicago City Clerk",
+  "city_vocab_council_member": "Alderman",
+  "city_vocab_council_members": "Aldermen",
+  "city_vocab_events": "Meetings",
+  "site_meta_site_name": "Chicago Councilmatic",
+  "site_meta_site_desc": "City Council, demystified.",
+  "site_meta_site_author": "DataMade",
+  "site_meta_site_url": "https://chicago.councilmatic.org",
+  "site_meta_twitter_site": "@councilmatic",
+  "site_meta_twitter_creator": "@DataMadeCo"
+}

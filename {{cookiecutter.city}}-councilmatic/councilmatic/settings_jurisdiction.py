@@ -4,23 +4,23 @@
 # These settings are required #
 ###############################
 
-OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:il/place:chicago/government'
-OCD_CITY_COUNCIL_ID = 'ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a'
-CITY_COUNCIL_NAME = 'Chicago City Council'
-LEGISLATIVE_SESSIONS = ['2007', '2011', '2015'] # the last one in this list should be the current legislative session
-CITY_NAME = 'Chicago'
-CITY_NAME_SHORT = 'Chicago'
+OCD_JURISDICTION_ID = '{{cookiecutter.ocd_jurisdiction_id}}'
+OCD_CITY_COUNCIL_ID = '{{cookiecutter.ocd_city_council_id}}'
+CITY_COUNCIL_NAME = '{{cookiecutter.city_council_name}}'
+LEGISLATIVE_SESSIONS = {{cookiecutter.legislative_sessions.years}}
+CITY_NAME = '{{cookiecutter.city_name}}'
+CITY_NAME_SHORT = '{{cookiecutter.city_name_short}}'
 
 # VOCAB SETTINGS FOR FRONT-END DISPLAY
 CITY_VOCAB = {
-    'MUNICIPAL_DISTRICT': 'Ward',       # e.g. 'District'
-    'SOURCE': 'Chicago City Clerk',
-    'COUNCIL_MEMBER': 'Alderman',       # e.g. 'Council Member'
-    'COUNCIL_MEMBERS': 'Aldermen',      # e.g. 'Council Members'
-    'EVENTS': 'Meetings',               # label for the events listing, e.g. 'Events'
+    'MUNICIPAL_DISTRICT': '{{cookiecutter.city_vocab_municipal_district}}',
+    'SOURCE': '{{cookiecutter.city_vocab_source}}',
+    'COUNCIL_MEMBER': '{{cookiecutter.city_vocab_council_member}}',
+    'COUNCIL_MEMBERS': '{{cookiecutter.city_vocab_council_members}}',
+    'EVENTS': '{{cookiecutter.city_vocab_events}}',
 }
 
-APP_NAME = 'city'
+APP_NAME = '{{cookiecutter.city}}'
 
 
 #########################
@@ -29,12 +29,12 @@ APP_NAME = 'city'
 
 # this is for populating meta tags
 SITE_META = {
-    'site_name' : '',       # e.g. 'Chicago Councilmatc'
-    'site_desc' : '',       # e.g. 'City Council, demystified. Keep tabs on Chicago legislation, aldermen, & meetings.'
-    'site_author' : '',     # e.g. 'DataMade'
-    'site_url' : '',        # e.g. 'https://chicago.councilmatic.org'
-    'twitter_site': '',     # e.g. '@DataMadeCo'
-    'twitter_creator': '',  # e.g. '@DataMadeCo'
+    'site_name': '{{cookiecutter.site_meta_site_name}}',
+    'site_desc': '{{cookiecutter.site_meta_site_desc}}',
+    'site_author': '{{cookiecutter.site_meta_site_author}}',
+    'site_url': '{{cookiecutter.site_meta_site_url}}',
+    'twitter_site': '{{cookiecutter.site_meta_twitter_site}}',
+    'twitter_creator': '{{cookiecutter.site_meta_twitter_creator}}',
 }
 
 LEGISTAR_URL = ''           # e.g. 'https://chicago.legistar.com/Legislation.aspx'
@@ -69,14 +69,11 @@ FOOTER_CREDITS = [
 SEARCH_PLACEHOLDER_TEXT = '' # e.g. 'police, zoning, O2015-7825, etc.'
 
 
-
 # these should live in APP_NAME/static/
 IMAGES = {
     'favicon': 'images/favicon.ico',
     'logo': 'images/logo.png',
 }
-
-
 
 
 # THE FOLLOWING ARE VOCAB SETTINGS RELEVANT TO DATA MODELS, LOGIC
@@ -94,8 +91,6 @@ COMMITTEE_CHAIR_TITLE = 'Chairman'
 # this is the anme of the role of committee members,
 # as stored in legistar
 COMMITTEE_MEMBER_TITLE = 'Member'
-
-
 
 
 # this is for convenience, & used to populate a table
