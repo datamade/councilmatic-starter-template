@@ -49,6 +49,9 @@ DISQUS_SHORTNAME = None
 # analytics tracking code
 ANALYTICS_TRACKING_CODE = ''
 
+# Google Maps API Key
+GOOGLE_API_KEY = ''
+
 HEADSHOT_PATH = os.path.join(os.path.dirname(__file__), '..'
                              '/chicago/static/images/')
 
