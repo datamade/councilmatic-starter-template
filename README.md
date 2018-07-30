@@ -328,6 +328,13 @@ This file is important! It's where you keep the parts of your Councilmatic that 
             <td>Yes</td>
         </tr>
         <tr>
+            <td>GOOGLE_API_KEY</td>
+            <td>
+                API key for rendering maps on council members and person detail pages. [Learn about creating your own Google API Key.](https://developers.google.com/maps/documentation/javascript/get-api-key)
+            </td>
+            <td>No</td>
+        </tr>
+        <tr>
             <td>HEADSHOT_PATH</td>
             <td>
                 Absolute path to where the data loader will save
