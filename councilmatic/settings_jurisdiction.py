@@ -4,23 +4,23 @@
 # These settings are required #
 ###############################
 
-OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:il/place:chicago/government'
+OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:pa/place:pittsburgh'
 OCD_CITY_COUNCIL_ID = 'ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a'
-CITY_COUNCIL_NAME = 'Chicago City Council'
-LEGISLATIVE_SESSIONS = ['2007', '2011', '2015'] # the last one in this list should be the current legislative session
-CITY_NAME = 'Chicago'
-CITY_NAME_SHORT = 'Chicago'
+CITY_COUNCIL_NAME = 'Pittsburgh City Council'
+LEGISLATIVE_SESSIONS = ['2018', '2019'] # the last one in this list should be the current legislative session
+CITY_NAME = 'Pittsburgh'
+CITY_NAME_SHORT = 'Pittsburgh'
 
 # VOCAB SETTINGS FOR FRONT-END DISPLAY
 CITY_VOCAB = {
-    'MUNICIPAL_DISTRICT': 'Ward',       # e.g. 'District'
-    'SOURCE': 'Chicago City Clerk',
-    'COUNCIL_MEMBER': 'Alderman',       # e.g. 'Council Member'
-    'COUNCIL_MEMBERS': 'Aldermen',      # e.g. 'Council Members'
+    'MUNICIPAL_DISTRICT': 'District',       # e.g. 'District'
+    'SOURCE': 'Pittsburgh City Clerk',
+    'COUNCIL_MEMBER': 'Council Member',       # e.g. 'Council Member'
+    'COUNCIL_MEMBERS': 'Council Member',      # e.g. 'Council Members'
     'EVENTS': 'Meetings',               # label for the events listing, e.g. 'Events'
 }
 
-APP_NAME = 'city'
+APP_NAME = 'pittsburgh'
 
 
 #########################
@@ -29,15 +29,15 @@ APP_NAME = 'city'
 
 # this is for populating meta tags
 SITE_META = {
-    'site_name' : '',       # e.g. 'Chicago Councilmatc'
-    'site_desc' : '',       # e.g. 'City Council, demystified. Keep tabs on Chicago legislation, aldermen, & meetings.'
-    'site_author' : '',     # e.g. 'DataMade'
-    'site_url' : '',        # e.g. 'https://chicago.councilmatic.org'
-    'twitter_site': '',     # e.g. '@DataMadeCo'
-    'twitter_creator': '',  # e.g. '@DataMadeCo'
+    'site_name' : 'Pittsburgh Councilmatic',       # e.g. 'Pittsburgh Councilmatc'
+    'site_desc' : 'City Council, demystified. Keep tabs on Pittsburgh legislation, votes, & hearings.',       # e.g. 'City Council, demystified. Keep tabs on Pittsburgh legislation, aldermen, & meetings.'
+    'site_author' : 'Pittsburgh Digital Services Studio',     # e.g. 'DataMade'
+    'site_url' : '',        # TODO--e.g. 'https://chicago.councilmatic.org'
+    'twitter_site': '@PghDigitalStudio',     # e.g. '@DataMadeCo'
+    'twitter_creator': '@PghDigitalStudio',  # e.g. '@DataMadeCo'
 }
 
-LEGISTAR_URL = ''           # e.g. 'https://chicago.legistar.com/Legislation.aspx'
+LEGISTAR_URL = 'https://pittsburgh.legistar.com/Legislation.aspx' # e.g. 'https://chicago.legistar.com/Legislation.aspx'
 
 
 # this is for the boundaries of municipal districts, to add
