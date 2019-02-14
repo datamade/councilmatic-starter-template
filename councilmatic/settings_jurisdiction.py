@@ -99,8 +99,43 @@ COMMITTEE_MEMBER_TITLE = 'Member'
 # describing legislation types on the default 'About' page template
 LEGISLATION_TYPE_DESCRIPTIONS = [
     {
-        'name': 'Ordinance',
-        'search_term': 'Ordinance',
+        'name': 'Appointment-Informing',
+        'search_term': 'Appointment',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': '',
+    },
+    {
+        'name': 'Appointment-Requiring Vote',
+        'search_term': 'Appointment',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': '',
+    },
+    {
+        'name': 'Certificate of Election',
+        'search_term': 'Election',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': '',
+    },
+    {
+        'name': 'Communication',
+        'search_term': 'Communication',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': '',
+    },
+    {
+        'name': 'Executive Order',
+        'search_term': 'Executive Order',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': '',
+    },
+    {
+        'name': 'Invoices',
+        'search_term': 'Invoices',
         'fa_icon': 'file-text-o',
         'html_desc': True,
         'desc': '',
@@ -110,8 +145,106 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
         'search_term': 'Report',
         'fa_icon': 'dollar',
         'html_desc': True,
+        'desc': 'Submissions of official reports by departments, boards and sister agencies.',
+    },
+    {
+        'name': 'Petition',
+        'search_term': 'Petition',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
         'desc': '',
     },
+    {
+        'name': 'Post Agenda',
+        'search_term': 'Post Agenda',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': '',
+    },
+    {
+        'name': 'Proclamation',
+        'search_term': 'Proclamation',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Public Hearing',
+        'search_term': 'Public Hearing',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Remarks',
+        'search_term': 'Remarks',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Report',
+        'search_term': 'Report',
+        'fa_icon': 'dollar',
+        'html_desc': True,
+        'desc': 'Submissions of official reports by departments, boards and sister agencies.',
+    },
+    {
+        'name': 'Resolution',
+        'search_term': 'Resolution',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Sister City Inventory',
+        'search_term': 'Sister City',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Small Games of Chance',
+        'search_term': 'Small Games of Chance',
+        'fa_icon': 'dollar',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Transcripts - Public Hearing',
+        'search_term': 'Transcripts - Public Hearing',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Transcripts - Regular Meeting',
+        'search_term': 'Transcripts - Regular Meeting',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Transcripts - Special Council Meeting',
+        'search_term': 'Transcripts - Special Council Meeting',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Veto Message',
+        'search_term': 'Veto Message',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    },
+    {
+        'name': 'Will of Council',
+        'search_term': 'Will of Council',
+        'fa_icon': 'file-text-o',
+        'html_desc': True,
+        'desc': ''
+    }
 ]
 
 # these keys should match committee slugs
