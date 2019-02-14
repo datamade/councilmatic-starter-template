@@ -84,199 +84,53 @@ TIME_ZONE = 'America/Chicago'
 
 ### Update city-specific settings
 
-Look for `councilmatic/settings_jursidiction.py`. This settings file tells your Councilmatic instance how to populate different parts of the UI and get fresh data from the OCD API. The following table explains why and how to adjust these values.
+Look for `councilmatic/settings_jursidiction.py`. This settings file tells your Councilmatic instance how to populate different parts of the UI and get fresh data from the OCD API. The following explains why and how to adjust these values.
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Example value</th>
-            <th>Optional?</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>OCD_JURISDICTION_ID</td>
-            <td>
-                <p>For scrapers hosted on the Datamade OCD API, you can
-                find the jurisdiction id <a href="http://ocd.datamade.us/jurisdictions/">here</a>.</p>
+For scrapers hosted on the Datamade OCD API, you can find the jurisdiction id at http://ocd.datamade.us/jurisdictions/.
 
-                <p>Otherwise, look at the <code>/jurisdictions/</code> endpoint of the <a href="https://github.com/opencivicdata/api.opencivicdata.org">OCD API</a>.</p>
-            </td>
-            <td>ocd-jurisdiction/country:us/state:il/place:chicago/government</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>OCD_CITY_COUNCIL_ID</td>
-            <td>
-                <p>Set either <code>OCD_CITY_COUNCIL_ID</code> or <code>OCD_CITY_COUNCIL_NAME</code> - this
-                identifies your city council.</p>
+Otherwise, look at the `/jurisdictions/` endpoint of the [OCD API](https://github.com/opencivicdata/api.opencivicdata.org).
 
-                <p><code>OCD_CITY_COUNCIL_ID</code> will take precedence over<code>OCD_CITY_COUNCIL_NAME</code>. But if your OCD IDs are not persistent, it may make more sense to set <code>OCD_CITY_COUNCIL_NAME</code>.</p>
+ocd-jurisdiction/country:us/state:il/place:chicago/government `OCD_CITY_COUNCIL_ID`
 
-                <p>You can find the name and id of your city council on the <a href="http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID">Datamade OCD API</a> or by using the same path to your own OCD API.</p>
-            </td>
-            <td>ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a</td>
-            <td>Only if you set OCD_CITY_COUNCIL_NAME</td>
-        </tr>
-        <tr>
-            <td>OCD_CITY_COUNCIL_NAME</td>
-            <td>
-                See OCD_CITY_COUNCIL_ID
-            </td>
-            <td>Chicago City Government</td>
-            <td>Only if you set OCD_CITY_COUNCIL_ID</td>
-        </tr>
-        <tr>
-            <td>CITY_COUNCIL_NAME</td>
-            <td>
-                Display name for the legislative body you'll be tracking.
-            </td>
-            <td>Chicago City Council</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>LEGISLATIVE_SESSIONS</td>
-            <td>
-                A list of years that tells Councilmiatic when a new
-                body is elected and which of these sessions you have
-                data for in your OCD API.
-            </td>
-            <td>['2007', '2011', '2015']</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>CITY_NAME</td>
-            <td>
-                Complete, pretty name of the jurisdiction
-            </td>
-            <td>New York City</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>CITY_NAME_SHORT</td>
-            <td>
-                Shortened version of the jurisdiction name
-            </td>
-            <td>NYC</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>CITY_VOCAB</td>
-            <td>
-                A dictionary telling Councilmatic how to refer to
-                different entities in the jurisdiction
-            </td>
-            <td>(See individual values below)</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>CITY_VOCAB['MUNICIPAL_DISTRICT']</td>
-            <td>
-                The name of the city sections, which could be a "ward", "sector", "district", etc.
-            </td>
-            <td>Ward</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>CITY_VOCAB['SOURCE']</td>
-            <td>
-                The name of the entity responsible for the source data that your Councilmatic will be based upon.
-            </td>
-            <td>Chicago City Clerk</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>CITY_VOCAB['COUNCIL_MEMBER']</td>
-            <td>
-                The name of a member of the legislative body that your Councilmatic tracks.
-            </td>
-            <td>Alderman</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>CITY_VOCAB['COUNCIL_MEMBERS']</td>
-            <td>
-                Plural form of the name of a member of the legislative body your Councilmatic tracks.
-            </td>
-            <td>Aldermen</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>CITY_VOCAB['EVENTS']</td>
-            <td>
-                The name of the meetings that members of the legislative body attend.
-            </td>
-            <td>Meetings</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>APP_NAME</td>
-            <td>
-                The name of the folder where your jurisdiction specific code lives.
-            </td>
-            <td>chicago</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>SITE_META</td>
-            <td>
-                Dictionary containing values stored in <code>meta</code> tags.
-            </td>
-            <td>(See individual values below)</td>
-            <td>Yes</td>
-        </tr>
-        <tr>
-            <td>SITE_META['site_name']</td>
-            <td>
-                Used for the <code>og:name</code>, <code>og:title</code>, and <code>twitter:title</code> meta tags
-            </td>
-            <td>Chicago Councilmatic</td>
-            <td>Yes</td>
-        </tr>
-        <tr>
-            <td>SITE_META['site_desc']</td>
-            <td>
-                Used for the <code>description</code>, <code>og:description</code>, and <code>twitter:description</code> meta tags
-            </td>
-            <td>City Council, demystified. Keep tabs on Chicago legislation, aldermen, & meetings.</td>
-            <td>Yes</td>
-        </tr>
-        <tr>
-            <td>SITE_META['site_author']</td>
-            <td>
-                Used for the <code>author</code> meta tag
-            </td>
-            <td>DataMade</td>
-            <td>Yes</td>
-        </tr>
-        <tr>
-            <td>SITE_META['site_url']</td>
-            <td>
-                Used to build absolute URLs for the meta tags.
-            </td>
-            <td>https://chicago.councilmatic.org</td>
-            <td>Yes</td>
-        </tr>
-        <tr>
-            <td>SITE_META['twitter_site']</td>
-            <td>
-                Used for <code>twitter:site</code> meta tag.
-            </td>
-            <td>@councilmatic</td>
-            <td>Yes</td>
-        </tr>
-        <tr>
-            <td>SITE_META['twitter_creator']</td>
-            <td>
-                Used for <code>twitter:creator</code>  meta tag.
-            </td>
-            <td>@DataMadeCo</td>
-            <td>Yes</td>
-        </tr>
-    </tbody>
-</table>
+Set either `OCD_CITY_COUNCIL_ID` or `OCD_CITY_COUNCIL_NAME` - this identifies your city council.
+
+`OCD_CITY_COUNCIL_ID` will take precedence over`OCD_CITY_COUNCIL_NAME`. But if your OCD IDs are not persistent, it may make more sense to set `OCD_CITY_COUNCIL_NAME`. You can find the name and id of your city council on the Datamade OCD API (http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID) or by using the same path to your own OCD API.
+
+`CITY_COUNCIL_NAME`: Display name for the legislative body you'll be tracking. Chicago City Council 
+
+`LEGISLATIVE_SESSIONS` A list of years that tells Councilmiatic when a new body is elected and which of these sessions you have data for in your OCD API. e.g. ['2007', '2011', '2015'] 
+
+`CITY_NAME` Complete, pretty name of the jurisdiction e.g. New York City 
+
+`CITY_NAME_SHORT` Shortened version of the jurisdiction name e.g. NYC
+
+`CITY_VOCAB` A dictionary telling Councilmatic how to refer to different entities in the jurisdiction (See individual values below) 
+
+`CITY_VOCAB['MUNICIPAL_DISTRICT']` The name of the city sections, which could be a "ward", "sector", "district", etc. e.g. Ward 
+
+`CITY_VOCAB['SOURCE']` The name of the entity responsible for the source data that your Councilmatic will be based upon. e.g. Chicago City Clerk 
+
+`CITY_VOCAB['COUNCIL_MEMBER']` The name of a member of the legislative body that your Councilmatic tracks. e.g. Alderman 
+
+`CITY_VOCAB['COUNCIL_MEMBERS']` Plural form of the name of a member of the legislative body your Councilmatic tracks. e.g. Aldermen 
+
+`CITY_VOCAB['EVENTS']` The name of the meetings that members of the legislative body attend. e.g. Meetings 
+
+`APP_NAME` The name of the folder where your jurisdiction specific code lives. e.g. chicago
+
+`SITE_META` Dictionary containing values stored in `meta` tags. (See individual values below)
+
+`SITE_META['site_name']` Used for the `og:name`, `og:title`, and `twitter:title` meta tags e.g. Chicago Councilmatic 
+
+`SITE_META['site_desc']` Used for the `description`, `og:description`, and `twitter:description` meta tags. e.g. City Council, demystified. Keep tabs on Chicago legislation, aldermen, & meetings.
+
+`SITE_META['site_author']` Used for the `author` meta tag e.g. DataMade
+
+`SITE_META['site_url']` Used to build absolute URLs for the meta tags. e.g. https://chicago.councilmatic.org 
+
+`SITE_META['twitter_site']` Used for `twitter:site` meta tag. e.g. @councilmatic
+
+`SITE_META['twitter_creator']` Used for `twitter:creator` meta tag. e.g. @DataMadeCo
 
 ### Update deployment settings
 
