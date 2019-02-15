@@ -82,6 +82,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'councilmatic.wsgi.application'
 
+OCD_CITY_COUNCIL_NAME = 'Pittsburgh City Council'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

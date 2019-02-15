@@ -6,6 +6,7 @@
 
 OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:pa/place:pittsburgh'
 # OCD_CITY_COUNCIL_ID = 'ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a' -- no ID for Pittsburgh at present (2/14/19)
+OCD_CITY_COUNCIL_NAME = 'Pittsburgh City Council'
 CITY_COUNCIL_NAME = 'Pittsburgh City Council'
 LEGISLATIVE_SESSIONS = ['2018', '2019'] # the last one in this list should be the current legislative session
 CITY_NAME = 'Pittsburgh'
@@ -300,3 +301,6 @@ CONTACT_INFO = {
 EXTRA_TITLES = {
     'peduto-bill': 'Mayor',
 }
+
+USING_NOTIFICATIONS = False
+
