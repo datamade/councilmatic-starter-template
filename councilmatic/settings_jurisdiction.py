@@ -8,16 +8,16 @@ OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:pa/place:pittsburgh'
 # OCD_CITY_COUNCIL_ID = 'ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a' -- no ID for Pittsburgh at present (2/14/19)
 OCD_CITY_COUNCIL_NAME = 'Pittsburgh City Council'
 CITY_COUNCIL_NAME = 'Pittsburgh City Council'
-LEGISLATIVE_SESSIONS = ['2018', '2019'] # the last one in this list should be the current legislative session
+LEGISLATIVE_SESSIONS = ['2019'] # the last one in this list should be the current legislative session
 CITY_NAME = 'Pittsburgh'
-CITY_NAME_SHORT = 'Pitt'
+CITY_NAME_SHORT = 'Pittsburgh'
 
 # VOCAB SETTINGS FOR FRONT-END DISPLAY
 CITY_VOCAB = {
     'MUNICIPAL_DISTRICT': 'District',       # e.g. 'District'
     'SOURCE': 'Pittsburgh City Clerk',
     'COUNCIL_MEMBER': 'Council Member',       # e.g. 'Council Member'
-    'COUNCIL_MEMBERS': 'Council Member',      # e.g. 'Council Members'
+    'COUNCIL_MEMBERS': 'Council Members',      # e.g. 'Council Members'
     'EVENTS': 'Meetings',    # label for the events listing, e.g. 'Events'
 }
 
@@ -61,8 +61,8 @@ MAP_CONFIG = {
 FOOTER_CREDITS = [
     {
         'name':     'Pittsburgh Digital Services Studio', # e.g. 'DataMade'
-        'url':      '', # e.g. 'http://datamade.us'
-        'image':    '', # e.g. 'datamade-logo.png'
+        'url':      'https://www.youtube.com/watch?v=dQw4w9WgXcQ', # e.g. 'http://datamade.us'
+        # 'image':    '', # e.g. 'datamade-logo.png'
     },
 ]
 
