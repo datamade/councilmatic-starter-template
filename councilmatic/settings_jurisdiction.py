@@ -4,10 +4,10 @@
 # These settings are required #
 ###############################
 
-OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:il/place:chicago/government'
-OCD_CITY_COUNCIL_ID = 'ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a'
+OCD_CITY_COUNCIL_NAME = 'Chicago City Council'
 CITY_COUNCIL_NAME = 'Chicago City Council'
-LEGISLATIVE_SESSIONS = ['2007', '2011', '2015'] # the last one in this list should be the current legislative session
+OCD_JURISDICTION_IDS = ['ocd-jurisdiction/country:us/state:il/place:chicago/government']
+LEGISLATIVE_SESSIONS = ['2007', '2011', '2015', '2019'] # the last one in this list should be the current legislative session
 CITY_NAME = 'Chicago'
 CITY_NAME_SHORT = 'Chicago'
 
@@ -68,16 +68,11 @@ FOOTER_CREDITS = [
 # this is the default text in search bars
 SEARCH_PLACEHOLDER_TEXT = '' # e.g. 'police, zoning, O2015-7825, etc.'
 
-
-
 # these should live in APP_NAME/static/
 IMAGES = {
     'favicon': 'images/favicon.ico',
     'logo': 'images/logo.png',
 }
-
-
-
 
 # THE FOLLOWING ARE VOCAB SETTINGS RELEVANT TO DATA MODELS, LOGIC
 # (this is diff from VOCAB above, which is all for the front end)
@@ -94,8 +89,6 @@ COMMITTEE_CHAIR_TITLE = 'Chairman'
 # this is the anme of the role of committee members,
 # as stored in legistar
 COMMITTEE_MEMBER_TITLE = 'Member'
-
-
 
 
 # this is for convenience, & used to populate a table
@@ -140,3 +133,6 @@ MANUAL_HEADSHOTS = {
 EXTRA_TITLES = {
     # e.g. 'emanuel-rahm': 'Mayor',
 }
+
+# whether the app is using django-councilmatic-notifications
+USING_NOTIFICATIONS = False

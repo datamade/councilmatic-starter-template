@@ -11,39 +11,26 @@ To simplify redeployment of Councilmatic instances, DataMade identified two nece
 
 With this template, you can create a Councilmatic site for your own city, built using the `django-councilmatic` app. Read on!
 
-## Finding Data
-
-You need data about your city in the Open Civic Data API.
-
-How you get your data into an instance of the OCD API is up to you. What does DataMade do? We use scrapers, which run nightly to update the API by scraping data from Legistar-backed sites operated by the cities for which we built Councilmatic. Your city may be running a Legistar-backed site, and if so, you can checkout [`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper) and the [`pupa`](https://github.com/opencivicdata/pupa) framework to get a head start on scraping.
-
-If you need examples of how to customize your scraper, look at [`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal) as well as [DataMade](https://datamade.us/), which hosts several municipal-level scrapers. You can find information about what cities and other governmental bodies are already covered on [the OCD DataMade site](http://ocd.datamade.us/jurisdictions/).
-
 ## Getting started: Create your site
-
-NOTE: This guide focuses on setting up your app for development. It does not discuss in detail the process of finding, scraping, and importing city data or deploying your site.
 
 ### Install OS Level dependencies
 
 * Python 3.4
 * PostgreSQL 9.4 +
 
-
 ### Clone this project and make it your own
 ```
 git clone https://github.com/datamade/councilmatic-starter-template.git yourcity_councilmatic
 ```
 
-
 ### Make a virtualenv and install dependencies
 
 We recommend using [virtualenv](https://virtualenv.readthedocs.io/en/latest/)
-and
-[virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/install.html)
+and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/install.html)
 for working in a virtualized development environment. [Read how to set up
 virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
 
-Once you have virtualenvwrapper set up, do the following in your bash profile:
+Once you have virtualenvwrapper set up, run the following commands in your terminal:
 
 ```bash
 mkvirtualenv councilmatic
@@ -57,7 +44,62 @@ Afterwards, whenever you want to use this virtual environment, run:
 workon yourcity_councilmatic
 ```
 
+### Finding data
+
+`django-councilmatic` leverages, and in some instances, lightly extends the Open Civic Data standard, implemented in Django as [`python-opencivicdata`](https://github.com/opencivicdata/python-opencivicdata). The first step toward running a new Councilmatic instance is to locate data about your city and use it to populate these OCD models.
+
+How you do that is up to you. At DatMade, we maintain a series of external municipal scrapers that retrieve data from Legistar-backed sites.
+
+If your city runs a Legistar-backed site, see [`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal) for several examples of scrapers that will populate a given database with legislative data in the format required by Councilmatic. These scrapers leverage [`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper) to scrape Legistar and the [`pupa`](https://github.com/opencivicdata/pupa) framework to shape and import data.
+
+If your city does not run a Legistar-backed site, we still recommend using `pupa` as a legislative scraping framework.
+
+In either case, create a database for your application.
+
+```bash
+createdb yourcity_councilmatic
+```
+
+Next, create a settings file for `pupa` –
+
+```bash
+touch pupa_settings.py
+```
+
+– and add the following settings:
+
+```python
+# Leave these blank
+OCD_CITY_COUNCIL_NAME = ''
+CITY_COUNCIL_NAME = ''
+STATIC_PATH = ''
+
+INSTALLED_APPS = (
+    'django.contrib.contenttypes',
+    'opencivicdata.core.apps.BaseConfig',
+    'opencivicdata.legislative.apps.BaseConfig',
+    'pupa',
+    'councilmatic_core'
+)
+
+# Change this if you called your database something different
+DATABASE_URL = 'postgres:///yourcity_councilmatic'
+```
+
+Finally, then initialize `pupa`.
+
+```
+pupa dbinit us
+pupa init YOUR_CITY_SCRAPER
+```
+
+Once you've filled out the prompts, you will see a new directory called `YOUR_CITY_SCRAPER`. Inside, you'll find the scaffolding for the necessary scrapers to populate the database.
+
+Define the `scrape` methods in each of the resulting scraper classes, then run `pupa update YOUR_CITY` to import data.
+
 ### Rename the "city" app
+
+Now that you have the data, set up your instance.
 
 Inside the git repository that you cloned above, you should see a folder called `city`. Rename this folder to something that makes sense for your project, e.g., "chicago."
 
@@ -81,10 +123,9 @@ Then, change the TIME_ZONE. You can use [this list](https://en.wikipedia.org/wik
 TIME_ZONE = 'America/Chicago'
 ```
 
-
 ### Update city-specific settings
 
-Look for `councilmatic/settings_jursidiction.py`. This settings file tells your Councilmatic instance how to populate different parts of the UI and get fresh data from the OCD API. The following table explains why and how to adjust these values.
+Look for `councilmatic/settings_jurisdiction.py`. This settings file tells your Councilmatic instance how to populate different parts of the UI and get fresh data from the OCD database. The following table explains why and how to adjust these values.
 
 <table>
     <thead>
@@ -97,36 +138,20 @@ Look for `councilmatic/settings_jursidiction.py`. This settings file tells your 
     </thead>
     <tbody>
         <tr>
-            <td>OCD_JURISDICTION_ID</td>
+            <td>OCD_JURISDICTION_IDS</td>
             <td>
-                <p>For scrapers hosted on the Datamade OCD API, you can
-                find the jurisdiction id <a href="http://ocd.datamade.us/jurisdictions/">here</a>.</p>
-
-                <p>Otherwise, look at the <code>/jurisdictions/</code> endpoint of the <a href="https://github.com/opencivicdata/api.opencivicdata.org">OCD API</a>.</p>
+                <p>An array of the OCD IDs of jurisdictions covered by your Councilmatic instance. Query the `opencivicdata_jurisdictions` table for options.</p>
             </td>
-            <td>ocd-jurisdiction/country:us/state:il/place:chicago/government</td>
+            <td>['ocd-jurisdiction/country:us/state:il/place:chicago/government']</td>
             <td>No</td>
-        </tr>
-        <tr>
-            <td>OCD_CITY_COUNCIL_ID</td>
-            <td>
-                <p>Set either <code>OCD_CITY_COUNCIL_ID</code> or <code>OCD_CITY_COUNCIL_NAME</code> - this
-                identifies your city council.</p>
-
-                <p><code>OCD_CITY_COUNCIL_ID</code> will take precedence over<code>OCD_CITY_COUNCIL_NAME</code>. But if your OCD IDs are not persistent, it may make more sense to set <code>OCD_CITY_COUNCIL_NAME</code>.</p>
-
-                <p>You can find the name and id of your city council on the <a href="http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID">Datamade OCD API</a> or by using the same path to your own OCD API.</p>
-            </td>
-            <td>ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a</td>
-            <td>Only if you set OCD_CITY_COUNCIL_NAME</td>
         </tr>
         <tr>
             <td>OCD_CITY_COUNCIL_NAME</td>
             <td>
-                See OCD_CITY_COUNCIL_ID
+                This identifies the legislative body you'll be tracking. It should correspond to an Organization in your database. Query the `opencivicdata_organization` table (or `opencivicdata.legislative.Organization` model in the ORM) for options.
             </td>
-            <td>Chicago City Government</td>
-            <td>Only if you set OCD_CITY_COUNCIL_ID</td>
+            <td>Chicago City Council</td>
+            <td>No</td>
         </tr>
         <tr>
             <td>CITY_COUNCIL_NAME</td>
@@ -141,9 +166,9 @@ Look for `councilmatic/settings_jursidiction.py`. This settings file tells your 
             <td>
                 A list of years that tells Councilmiatic when a new
                 body is elected and which of these sessions you have
-                data for in your OCD API.
+                data for in your OCD database.
             </td>
-            <td>['2007', '2011', '2015']</td>
+            <td>['2007', '2011', '2015', '2019']</td>
             <td>No</td>
         </tr>
         <tr>
@@ -360,9 +385,7 @@ This file is important! It's where you keep the parts of your Councilmatic that 
 
 Before we can run the website, we need to create a database.
 
-```bash
-createdb yourcity_councilmatic
-```
+  
 
 Then, run migrations. (Be sure that you are "working on" the correct virtual environment.)
 
@@ -382,7 +405,7 @@ Get an image (suggested 310x310), and transform it in device-specific favicon im
 
 ## Import data from the Open Civic Data API
 
-The django-councilmatic app comes with a import_data management command, which populates bills, people, committees, and events, loaded from the OCD API. You can explore the nitty-gritty of this code [here](https://github.com/datamade/django-councilmatic/blob/master/councilmatic_core/management/commands/import_data.py). Note: Earlier releases of django-councilmatic (< 0.7) use `loaddata`, instead of `import_data`.
+The django-councilmatic app comes with a import_data management command, which populates bills, people, committees, and events, loaded from the OCD database. You can explore the nitty-gritty of this code [here](https://github.com/datamade/django-councilmatic/blob/master/councilmatic_core/management/commands/import_data.py). Note: Earlier releases of django-councilmatic (< 0.7) use `loaddata`, instead of `import_data`.
 
 Running `import_data` will take a while, depending on volume (e.g., NYC may require around half an hour).
 
@@ -390,7 +413,7 @@ Running `import_data` will take a while, depending on volume (e.g., NYC may requ
 python manage.py import_data
 ```
 
-By default, the import_data command carefully looks at the OCD API; it is a smart management command. If you already have bills loaded, it will not look at everything on the API - it will look at the most recently updated bill in your database, see when that bill was last updated on the OCD API, and then look through everything on the API that was updated after that point. If you'd like to load things that are older than what you currently have loaded, you can run the import_data management command with a `--delete` option, which removes everything from your database before loading.
+By default, the import_data command carefully looks at the OCD database; it is a smart management command. If you already have bills loaded, it will not look at everything on the API - it will look at the most recently updated bill in your database, see when that bill was last updated on the OCD database, and then look through everything on the API that was updated after that point. If you'd like to load things that are older than what you currently have loaded, you can run the import_data management command with a `--delete` option, which removes everything from your database before loading.
 
 The import_data command has some more nuance than the description above, for the different types of data it loads. If you have any questions, open up an issue and pester us to write better documentation.
 
