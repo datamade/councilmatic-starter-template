@@ -38,9 +38,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'haystack',
-    'city',
+    'chicago',
     'councilmatic_core',
+    'opencivicdata.core',
+    'opencivicdata.legislative',
 )
 
 try:
@@ -48,7 +51,7 @@ try:
 except NameError:
     pass
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -102,6 +105,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATIC_PATH = os.path.join(os.path.dirname(__file__), '..', APP_NAME, 'static')
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
