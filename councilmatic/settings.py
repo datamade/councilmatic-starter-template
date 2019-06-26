@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'debug_toolbar',
     'haystack',
-    'chicago',
+    'city',
     'councilmatic_core',
     'opencivicdata.core',
     'opencivicdata.legislative',
