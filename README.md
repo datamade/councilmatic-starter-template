@@ -116,6 +116,8 @@ Once you've filled out the prompts, you will see a new directory called `YOUR_CI
 
 Define the `scrape` methods in each of the resulting scraper classes, then run `pupa update YOUR_CITY` to import data. If you aren't sure where to start, [the City Scrapers project](https://github.com/City-Bureau/city-scrapers) includes many examples of scraping all sorts of government websites.
 
+N.b., if you wish to make any changes to the models, see [the `django-councilmatic` README for information on approaches](https://github.com/datamade/django-councilmatic/).
+
 #### Add metadata
 
 `django-councilmatic` comes with management commands to add headshots and geography shapes to `Person` objects and `Post` objects, respectively.
@@ -126,9 +128,11 @@ If you've imported people with headshot URLs, run `update_headshots` to download
 python manage.py update_headshots
 ```
 
-Likewise, if you've imported `Post` objects,
+Likewise, if you've imported `Post` objects and you'd like to include geographic boundaries that pertain to them, create a GeoJSON file containing shapes for each division represented in your instance, then run the `import_shapes` command. [See the GeoJSON file in `chi-councilmatic`](https://github.com/datamade/chi-councilmatic/blob/bb33a1ed80623e39df445f5108cfdda5ccfaf942/data/final/shapes/chicago_shapes.json) for an example of the expected format.
 
-TO-DO: XXXXXXXXX
+```bash
+python manage.py import_shapes /path/to/your/shapes.geojson
+```
 
 ### 5. Rename the "city" app
 
@@ -430,89 +434,11 @@ Navigate to [http://localhost:8000/](http://localhost:8000/).
 
 On a Councilmatic site, users can search bills according to given query parameters. To power our searches, we use [Django Haystack](https://django-haystack.readthedocs.io/en/v2.4.1/toc.html) to connect with [Solr](http://lucene.apache.org/solr/), an open source tool, written in Java.
 
-### Installing Solr
+### Run Solr
 
-#### Option 1: Docker
+Because it's a bit of a heavy dependency, we recommend running a containerized instance of Solr. [See the Solr image in DockerHub](https://hub.docker.com/_/solr/) for more information and startup instructions. Don't forget to update your Haystack config in `councilmatic/settings_deployment.py`, if you map a port other than the Solr default (8983) to your container!
 
-You are more than welcome to run a containerized instance of Solr. [See the Solr image in DockerHub](https://hub.docker.com/_/solr/) for more information and startup instructions. Don't forget to update your Haystack config in `councilmatic/settings_deployment.py`, if you map a port other than the Solr default (8983) to your container!
-
-#### Option 2: Local install
-
-**Requirements: Open JDK or Java**
-
-On Ubuntu:
-
-``` bash
-$ sudo apt-get update
-$ sudo apt-get install openjdk-7-jre-headless
-```
-
-On OS X:
-
-1. Download latest Java from
-[http://java.com/en/download/mac_download.jsp?locale=en](http://java.com/en/download/mac_download.jsp?locale=en)
-2. Follow normal install procedure
-3. Change system Java to use the version you just installed:
-
-    ``` bash
-    sudo mv /usr/bin/java /usr/bin/java16
-    sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
-    ```
-
-**Download & setup Solr**
-
-``` bash
-wget http://archive.apache.org/dist/lucene/solr/4.10.4/solr-4.10.4.tgz
-tar -xvf solr-4.10.4.tgz
-sudo cp -R solr-4.10.4/example /opt/solr
-
-# Copy schema.xml for this app to solr directory
-sudo cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
-```
-
-**Run Solr**
-```bash
-# Next, start the java application that runs solr
-# Do this in another terminal window & keep it running
-# If you see error output, somethings wrong
-cd /opt/solr
-sudo java -jar start.jar
-```
-
-**OPTIONAL: Install and configure Jetty for Solr**
-
-Just running Solr as described above is probably OK in a development setting.
-To deploy Solr in production, you'll want to use something like Jetty. Here's
-how you'd do that on Ubuntu:
-
-``` bash
-sudo apt-get install jetty
-
-# Backup stock init.d script
-sudo mv /etc/init.d/jetty ~/jetty.orig
-
-# Get init.d script suggested by Solr docs
-sudo cp solr_scripts/jetty.sh /etc/init.d/jetty
-sudo chown root.root /etc/init.d/jetty
-sudo chmod 755 /etc/init.d/jetty
-
-# Add Solr specific configs to /etc/default/jetty
-sudo cp solr_scripts/jetty.conf /etc/default/jetty
-
-# Change ownership of the Solr directory so Jetty can get at it
-sudo chown -R jetty.jetty /opt/solr
-
-# Start up Solr
-sudo service jetty start
-
-# Solr should now be running on port 8983
-```
-
-**Using Solr for more than one Councilmatic on the same server**
-
-If you intend to run more than one instance of Councilmatic on the same server,
-you'll need to take a look at [this README](solr_scripts/README.md) to make sure you're
-configuring things properly.
+If you prefer to run Solr locally, [see the Solr documentation](https://lucene.apache.org/solr/guide/8_1/solr-tutorial.html#solr-tutorial) for startup instructions.
 
 ### Haystack commands to know
 
@@ -530,15 +456,7 @@ If, during the course of development, you need to make changes to the fields tha
 python manage.py build_solr_schema > solr_scripts/schema.xml
 ```
 
-If you're running Solr in a container, remove and recreate the container to capture changes in the Solr schema.
-
-If you're running a local install of Solr:
-
-```
-cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
-```
-
-Then, restart Solr for the changes to take effect.
+Remove and recreate your Solr container to capture changes in the Solr schema.
 
 ## Errors/Bugs
 
