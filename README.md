@@ -72,7 +72,7 @@ python manage.py createsuperuser
 
 `django-councilmatic` leverages, and in some instances, lightly extends the Open Civic Data standard, implemented in Django as [`python-opencivicdata`](https://github.com/opencivicdata/python-opencivicdata). The next step toward running a new Councilmatic instance is to locate data about your city and use it to populate these OCD models.
 
-How you do that is up to you. At DatMade, we maintain a series of external municipal scrapers that retrieve data from Legistar-backed sites.
+How you do that is up to you. At DataMade, we maintain a series of external municipal scrapers that retrieve data from Legistar-backed sites.
 
 If your city runs a Legistar-backed site, see [`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal) for several examples of scrapers that will populate a given database with legislative data in the format required by Councilmatic. These scrapers leverage [`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper) to scrape Legistar and the [`pupa`](https://github.com/opencivicdata/pupa) framework to shape and import data.
 
