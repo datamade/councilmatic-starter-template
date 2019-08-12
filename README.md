@@ -11,43 +11,31 @@ To simplify redeployment of Councilmatic instances, DataMade identified two nece
 
 With this template, you can create a Councilmatic site for your own city, built using the `django-councilmatic` app. Read on!
 
-## Finding Data
+## Getting started
 
-You need data about your city in the Open Civic Data API.
+### 1. Install OS Level dependencies
 
-How you get your data into an instance of the OCD API is up to you. What does DataMade do? We use scrapers, which run nightly to update the API by scraping data from Legistar-backed sites operated by the cities for which we built Councilmatic. Your city may be running a Legistar-backed site, and if so, you can checkout [`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper) and the [`pupa`](https://github.com/opencivicdata/pupa) framework to get a head start on scraping.
+* Python 3.4+
+* PostgreSQL 9.4+
 
-If you need examples of how to customize your scraper, look at [`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal) as well as [DataMade](https://datamade.us/), which hosts several municipal-level scrapers. You can find information about what cities and other governmental bodies are already covered on [the OCD DataMade site](http://ocd.datamade.us/jurisdictions/).
+### 2. Clone this project
 
-## Getting started: Create your site
-
-NOTE: This guide focuses on setting up your app for development. It does not discuss in detail the process of finding, scraping, and importing city data or deploying your site.
-
-### Install OS Level dependencies
-
-* Python 3.4
-* PostgreSQL 9.4 +
-
-
-### Clone this project and make it your own
-```
+```bash
 git clone https://github.com/datamade/councilmatic-starter-template.git yourcity_councilmatic
 ```
 
-
-### Make a virtualenv and install dependencies
+### 3. Make a virtualenv and install dependencies
 
 We recommend using [virtualenv](https://virtualenv.readthedocs.io/en/latest/)
-and
-[virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/install.html)
+and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/install.html)
 for working in a virtualized development environment. [Read how to set up
 virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
 
-Once you have virtualenvwrapper set up, do the following in your bash profile:
+Once you have virtualenvwrapper set up, run the following commands in your terminal:
 
 ```bash
-mkvirtualenv councilmatic
 cd yourcity_councilmatic
+mkvirtualenv councilmatic
 pip install -r requirements.txt
 ```
 
@@ -57,12 +45,103 @@ Afterwards, whenever you want to use this virtual environment, run:
 workon yourcity_councilmatic
 ```
 
-### Rename the "city" app
+### 4. Set up your database
+
+#### Initialization
+
+Before you can run the website, you need to create a database and install PostGIS.
+
+```bash
+createdb yourcity_councilmatic
+psql -d yourcity_councilmatic -c "CREATE EXTENSION postgis"
+```
+
+Then, run migrations. (Be sure that you are "working on" the correct virtual environment.)
+
+```bash
+python manage.py migrate --no-initial-data
+```
+
+Finally, create an admin user. Set a username and password when prompted.
+
+```bash
+python manage.py createsuperuser
+```
+
+#### Find legislative data
+
+`django-councilmatic` leverages, and in some instances, lightly extends the Open Civic Data standard, implemented in Django as [`python-opencivicdata`](https://github.com/opencivicdata/python-opencivicdata). The next step toward running a new Councilmatic instance is to locate data about your city and use it to populate these OCD models.
+
+How you do that is up to you. At DataMade, we maintain a series of external municipal scrapers that retrieve data from Legistar-backed sites.
+
+If your city runs a Legistar-backed site, see [`scrapers-us-municipal`](https://github.com/opencivicdata/scrapers-us-municipal) for several examples of scrapers that will populate a given database with legislative data in the format required by Councilmatic. These scrapers leverage [`python-legistar-scraper`](https://github.com/opencivicdata/python-legistar-scraper) to scrape Legistar and the [`pupa`](https://github.com/opencivicdata/pupa) framework to shape and import data.
+
+If your city does not run a Legistar-backed site, we still recommend using `pupa` as a legislative scraping framework. You can add your scrapers to your Councilmatic repository, or compose them elsewhere.
+
+Next, install and create a settings file for `pupa` –
+
+```bash
+pip install pupa
+touch pupa_settings.py
+```
+
+– and add the following settings:
+
+```python
+# Leave these blank
+OCD_CITY_COUNCIL_NAME = ''
+CITY_COUNCIL_NAME = ''
+STATIC_PATH = ''
+
+INSTALLED_APPS = (
+    'django.contrib.contenttypes',
+    'opencivicdata.core.apps.BaseConfig',
+    'opencivicdata.legislative.apps.BaseConfig',
+    'pupa',
+    'councilmatic_core'
+)
+
+# Change this if you called your database something different
+DATABASE_URL = 'postgres:///yourcity_councilmatic'
+```
+
+Finally, initialize `pupa`.
+
+```
+pupa dbinit us
+pupa init YOUR_CITY_SCRAPER
+```
+
+Once you've filled out the prompts, you will see a new directory called `YOUR_CITY_SCRAPER`. Inside, you'll find the scaffolding for the necessary scrapers to populate the database.
+
+Define the `scrape` methods in each of the resulting scraper classes, then run `pupa update YOUR_CITY` to import data. If you aren't sure where to start, [the City Scrapers project](https://github.com/City-Bureau/city-scrapers) includes many examples of scraping all sorts of government websites.
+
+N.b., if you wish to make any changes to the models, see [the `django-councilmatic` README for information on approaches](https://github.com/datamade/django-councilmatic/).
+
+#### Add metadata
+
+`django-councilmatic` comes with management commands to add headshots and geography shapes to `Person` objects and `Post` objects, respectively.
+
+If you've imported people with headshot URLs, run `update_headshots` to download the images and store them where Django knows where to find them.
+
+```bash
+python manage.py update_headshots
+```
+
+Likewise, if you've imported `Post` objects and you'd like to include geographic boundaries that pertain to them, create a GeoJSON file containing shapes for each division represented in your instance, then run the `import_shapes` command. [See the GeoJSON file in `chi-councilmatic`](https://github.com/datamade/chi-councilmatic/blob/bb33a1ed80623e39df445f5108cfdda5ccfaf942/data/final/shapes/chicago_shapes.json) for an example of the expected format.
+
+```bash
+python manage.py import_shapes /path/to/your/shapes.geojson
+```
+
+### 5. Rename the "city" app
+
+Now that you have the data, set up your instance.
 
 Inside the git repository that you cloned above, you should see a folder called `city`. Rename this folder to something that makes sense for your project, e.g., "chicago."
 
 ```bash
-mv city chicago
+mv city yourcity
 ```
 
 Now, update the main settings file - `councilmatic/settings.py`. First, in `INSTALLED_APPS`, add the name of the folder that you just renamed:
@@ -71,7 +150,7 @@ Now, update the main settings file - `councilmatic/settings.py`. First, in `INST
 INSTALLED_APPS = (
     ...
     ~'city',~
-    'chicago',
+    'yourcity',
 )
 ```
 
@@ -81,10 +160,9 @@ Then, change the TIME_ZONE. You can use [this list](https://en.wikipedia.org/wik
 TIME_ZONE = 'America/Chicago'
 ```
 
+### 6. Update city-specific settings
 
-### Update city-specific settings
-
-Look for `councilmatic/settings_jursidiction.py`. This settings file tells your Councilmatic instance how to populate different parts of the UI and get fresh data from the OCD API. The following table explains why and how to adjust these values.
+Look for `councilmatic/settings_jurisdiction.py`. This settings file tells your Councilmatic instance how to populate different parts of the UI and get fresh data from the OCD database. The following table explains why and how to adjust these values.
 
 <table>
     <thead>
@@ -97,36 +175,20 @@ Look for `councilmatic/settings_jursidiction.py`. This settings file tells your 
     </thead>
     <tbody>
         <tr>
-            <td>OCD_JURISDICTION_ID</td>
+            <td>OCD_JURISDICTION_IDS</td>
             <td>
-                <p>For scrapers hosted on the Datamade OCD API, you can
-                find the jurisdiction id <a href="http://ocd.datamade.us/jurisdictions/">here</a>.</p>
-
-                <p>Otherwise, look at the <code>/jurisdictions/</code> endpoint of the <a href="https://github.com/opencivicdata/api.opencivicdata.org">OCD API</a>.</p>
+                <p>An array of the OCD IDs of jurisdictions covered by your Councilmatic instance. Query the <code>opencivicdata_jurisdictions</code> table for options.</p>
             </td>
-            <td>ocd-jurisdiction/country:us/state:il/place:chicago/government</td>
+            <td>['ocd-jurisdiction/country:us/state:il/place:chicago/government']</td>
             <td>No</td>
-        </tr>
-        <tr>
-            <td>OCD_CITY_COUNCIL_ID</td>
-            <td>
-                <p>Set either <code>OCD_CITY_COUNCIL_ID</code> or <code>OCD_CITY_COUNCIL_NAME</code> - this
-                identifies your city council.</p>
-
-                <p><code>OCD_CITY_COUNCIL_ID</code> will take precedence over<code>OCD_CITY_COUNCIL_NAME</code>. But if your OCD IDs are not persistent, it may make more sense to set <code>OCD_CITY_COUNCIL_NAME</code>.</p>
-
-                <p>You can find the name and id of your city council on the <a href="http://ocd.datamade.us/organizations/?jurisdiction_id=YOUR_JURISDICTION_ID">Datamade OCD API</a> or by using the same path to your own OCD API.</p>
-            </td>
-            <td>ocd-organization/ef168607-9135-4177-ad8e-c1f7a4806c3a</td>
-            <td>Only if you set OCD_CITY_COUNCIL_NAME</td>
         </tr>
         <tr>
             <td>OCD_CITY_COUNCIL_NAME</td>
             <td>
-                See OCD_CITY_COUNCIL_ID
+                This identifies the legislative body you'll be tracking. It should correspond to an Organization in your database. Query the <code>opencivicdata_organization</code> table (or <code>opencivicdata.legislative.Organization</code> model in the ORM) for options.
             </td>
-            <td>Chicago City Government</td>
-            <td>Only if you set OCD_CITY_COUNCIL_ID</td>
+            <td>Chicago City Council</td>
+            <td>No</td>
         </tr>
         <tr>
             <td>CITY_COUNCIL_NAME</td>
@@ -141,9 +203,9 @@ Look for `councilmatic/settings_jursidiction.py`. This settings file tells your 
             <td>
                 A list of years that tells Councilmiatic when a new
                 body is elected and which of these sessions you have
-                data for in your OCD API.
+                data for in your OCD database.
             </td>
-            <td>['2007', '2011', '2015']</td>
+            <td>['2007', '2011', '2015', '2019']</td>
             <td>No</td>
         </tr>
         <tr>
@@ -278,7 +340,7 @@ Look for `councilmatic/settings_jursidiction.py`. This settings file tells your 
     </tbody>
 </table>
 
-### Update deployment settings
+### 7. Update deployment settings
 
 Look for `councilmatic/settings_deployment.py.example`. Make a copy of it so that you can customize it for your city:
 
@@ -308,7 +370,7 @@ This file is important! It's where you keep the parts of your Councilmatic that 
         <tr>
             <td>FLUSH_KEY</td>
             <td>
-                Used by the `flush` view in `django-councilmatic` to clear Django's cache.
+                Used by the <code>flush</code> view in <code>django-councilmatic</code> to clear Django's cache.
             </td>
             <td>No</td>
         </tr>
@@ -330,7 +392,7 @@ This file is important! It's where you keep the parts of your Councilmatic that 
         <tr>
             <td>GOOGLE_API_KEY</td>
             <td>
-                API key for rendering maps on council members and person detail pages. [Learn about creating your own Google API Key.](https://developers.google.com/maps/documentation/javascript/get-api-key)
+                API key for rendering maps on council members and person detail pages. <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">Learn about creating your own Google API Key.</a>
             </td>
             <td>No</td>
         </tr>
@@ -354,48 +416,11 @@ This file is important! It's where you keep the parts of your Councilmatic that 
     </tbody>
 </table>
 
-
-
-### Setup your database
-
-Before we can run the website, we need to create a database.
-
-```bash
-createdb yourcity_councilmatic
-```
-
-Then, run migrations. (Be sure that you are "working on" the correct virtual environment.)
-
-```bash
-python manage.py migrate --no-initial-data
-```
-
-Create an admin user. Set a username and password when prompted.
-
-```bash
-python manage.py createsuperuser
-```
-
-### Add a favicon
+### 8. Add a favicon
 
 Get an image (suggested 310x310), and transform it in device-specific favicon images [using this site](http://www.favicomatic.com/). Then, move the images into `<city_app>/static/images/icons`.
 
-## Import data from the Open Civic Data API
-
-The django-councilmatic app comes with a import_data management command, which populates bills, people, committees, and events, loaded from the OCD API. You can explore the nitty-gritty of this code [here](https://github.com/datamade/django-councilmatic/blob/master/councilmatic_core/management/commands/import_data.py). Note: Earlier releases of django-councilmatic (< 0.7) use `loaddata`, instead of `import_data`.
-
-Running `import_data` will take a while, depending on volume (e.g., NYC may require around half an hour).
-
-```bash
-python manage.py import_data
-```
-
-By default, the import_data command carefully looks at the OCD API; it is a smart management command. If you already have bills loaded, it will not look at everything on the API - it will look at the most recently updated bill in your database, see when that bill was last updated on the OCD API, and then look through everything on the API that was updated after that point. If you'd like to load things that are older than what you currently have loaded, you can run the import_data management command with a `--delete` option, which removes everything from your database before loading.
-
-The import_data command has some more nuance than the description above, for the different types of data it loads. If you have any questions, open up an issue and pester us to write better documentation.
-
-
-## Running Councilmatic locally
+### 9. Run Councilmatic locally
 
 Now, you are ready to run your unique version of Councilmatic!
 
@@ -405,112 +430,33 @@ python manage.py runserver
 
 Navigate to [http://localhost:8000/](http://localhost:8000/).
 
-## Setup search
+## Set up search with Haystack and Solr
 
-On a Councilmatic site, users can search bills according to given query parameters. To power our searches, we use [Solr](http://lucene.apache.org/solr/), an open source tool, written in Java.
+On a Councilmatic site, users can search bills according to given query parameters. To power our searches, we use [Django Haystack](https://django-haystack.readthedocs.io/en/v2.4.1/toc.html) to connect with [Solr](http://lucene.apache.org/solr/), an open source tool, written in Java.
 
-**Requirements: Open JDK or Java**
+### Run Solr
 
-On Ubuntu:
+Because it's a bit of a heavy dependency, we recommend running a containerized instance of Solr. [See the Solr image in DockerHub](https://hub.docker.com/_/solr/) for more information and startup instructions. Don't forget to update your Haystack config in `councilmatic/settings_deployment.py`, if you map a port other than the Solr default (8983) to your container!
 
-``` bash
-$ sudo apt-get update
-$ sudo apt-get install openjdk-7-jre-headless
-```
+If you prefer to run Solr locally, [see the Solr documentation](https://lucene.apache.org/solr/guide/8_1/solr-tutorial.html#solr-tutorial) for startup instructions.
 
-On OS X:
+### Haystack commands to know
 
-1. Download latest Java from
-[http://java.com/en/download/mac_download.jsp?locale=en](http://java.com/en/download/mac_download.jsp?locale=en)
-2. Follow normal install procedure
-3. Change system Java to use the version you just installed:
+[Haystack provides several management commands](https://django-haystack.readthedocs.io/en/v2.4.1/management_commands.html) that make it easy to change and add data to your search index.
 
-    ``` bash
-    sudo mv /usr/bin/java /usr/bin/java16
-    sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
-    ```
+To make your data searchable:
 
-**Download & setup Solr**
-
-``` bash
-wget http://archive.apache.org/dist/lucene/solr/4.10.4/solr-4.10.4.tgz
-tar -xvf solr-4.10.4.tgz
-sudo cp -R solr-4.10.4/example /opt/solr
-
-# Copy schema.xml for this app to solr directory
-sudo cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
-```
-
-**Run Solr**
 ```bash
-# Next, start the java application that runs solr
-# Do this in another terminal window & keep it running
-# If you see error output, somethings wrong
-cd /opt/solr
-sudo java -jar start.jar
-```
-
-**Index the database**
-```bash
-# back in the nyc-councilmatic directory:
 python manage.py rebuild_index
 ```
 
-**OPTIONAL: Install and configure Jetty for Solr**
+If, during the course of development, you need to make changes to the fields that are indexed in `yourcity/search_indexes.py`, you need to regenerate the Solr schema:
 
-Just running Solr as described above is probably OK in a development setting.
-To deploy Solr in production, you'll want to use something like Jetty. Here's
-how you'd do that on Ubuntu:
-
-``` bash
-sudo apt-get install jetty
-
-# Backup stock init.d script
-sudo mv /etc/init.d/jetty ~/jetty.orig
-
-# Get init.d script suggested by Solr docs
-sudo cp solr_scripts/jetty.sh /etc/init.d/jetty
-sudo chown root.root /etc/init.d/jetty
-sudo chmod 755 /etc/init.d/jetty
-
-# Add Solr specific configs to /etc/default/jetty
-sudo cp solr_scripts/jetty.conf /etc/default/jetty
-
-# Change ownership of the Solr directory so Jetty can get at it
-sudo chown -R jetty.jetty /opt/solr
-
-# Start up Solr
-sudo service jetty start
-
-# Solr should now be running on port 8983
-```
-
-**Regenerate Solr schema**
-
-While developing, if you need to make changes to the fields that are getting
-indexed or how they are getting indexed, you'll need to regenerate the
-schema.xml file that Solr uses to make it's magic. Here's how that works:
-
-```
+```bash
 python manage.py build_solr_schema > solr_scripts/schema.xml
-cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
 ```
 
-In order for Solr to use the new schema file, you'll need to restart it.
-
-**Using Solr for more than one Councilmatic on the same server**
-
-If you intend to run more than one instance of Councilmatic on the same server,
-you'll need to take a look at [this README](solr_scripts/README.md) to make sure you're
-configuring things properly.
-
-## Team
-
-* Forest Gregg, DataMade - Open Civic Data (OCD) and Legistar scraping
-* Cathy Deng, DataMade - data models, front end
-* Derek Eder, DataMade - front end
-* Eric van Zanten, DataMade - search and dev ops
-* Regina Compton, DataMade - developer
+Remove and recreate your Solr container to capture changes in the Solr schema.
 
 ## Errors/Bugs
 
@@ -528,4 +474,4 @@ We welcome your ideas and feedback! Here's how to make a contribution:
 
 ## Copyright
 
-Copyright (c) 2015 Participatory Politics Foundation and DataMade. Released under the [MIT License](https://github.com/datamade/councilmatic-starter-template/blob/master/LICENSE).
+Copyright (c) 2019 Participatory Politics Foundation and DataMade. Released under the [MIT License](https://github.com/datamade/councilmatic-starter-template/blob/master/LICENSE).
