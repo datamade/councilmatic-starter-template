@@ -44,11 +44,8 @@ cp .env.example .env
 
 ### 3. Initial Setup
 
-Or manually:
 ```bash
 docker compose build
-docker compose run --rm app python manage.py migrate
-docker compose run --rm app python manage.py collectstatic --noinput
 ```
 
 ### 4. Create a Superuser
