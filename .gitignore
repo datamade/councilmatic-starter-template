@@ -2,6 +2,7 @@
 .DS_Store
 
 # Settings
+.env
 settings_deployment.py
 
 # Collected Static Files
@@ -10,3 +11,4 @@ static/**
 
 __pycache__
 downloads
+webpack-stats.json

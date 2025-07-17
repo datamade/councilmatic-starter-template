@@ -1,2 +1,20 @@
-psycopg2==2.6.2
-django-councilmatic>=2.5.4
+# Core Django and database
+Django<4
+psycopg2-binary>=2.9.5
+dj-database-url
+
+# Councilmatic core
+https://github.com/datamade/django-councilmatic/archive/refs/heads/5.x.zip
+
+# Static files and frontend
+django-webpack-loader>=2.0.0
+whitenoise>=6.6.0
+
+# Development and debugging
+django-debug-toolbar>=4.2.0
+
+# Time zones
+pytz>=2023.3
+
+# Environment management
+python-dotenv>=1.0.0
