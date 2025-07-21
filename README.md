@@ -79,7 +79,7 @@ Customize your city's branding by editing:
 
 To import legislative data, you'll need to:
 
-1. **Install pupa**: Follow the [pupa documentation](https://opencivicdata.readthedocs.io/en/latest/scraping/)
+1. **Install pupa**: Follow the [pupa documentation](https://open-civic-data.readthedocs.io/en/latest/scrape/index.html)
 2. **Create scrapers** for your city's data sources
 3. **Run import**: Use pupa to import into your database
 
