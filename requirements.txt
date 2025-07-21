@@ -1,10 +1,10 @@
 # Core Django and database
-Django<4
+Django<5
 psycopg2-binary>=2.9.5
 dj-database-url
 
 # Councilmatic core
-https://github.com/datamade/django-councilmatic/archive/refs/heads/5.x.zip
+django-councilmatic[all] @ https://github.com/datamade/django-councilmatic/archive/refs/heads/5.x.zip
 
 # Static files and frontend
 django-webpack-loader>=2.0.0

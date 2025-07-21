@@ -38,20 +38,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    let anchorLinks = []
+
     // Smooth scrolling for anchor links
-    const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    anchorLinks.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+    try {
+        anchorLinks = document.querySelectorAll('a[href^="#"]');
+    } catch (err) {
+        console.error(err);
+    } finally {
+        anchorLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
-    });
+    }
 
     // Lazy loading for images
     if ('IntersectionObserver' in window) {

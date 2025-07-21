@@ -16,7 +16,8 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY ./requirements.txt /app/requirements.txt
-RUN pip install --upgrade setuptools && \
+RUN pip install "pip<24.1" && \
+	pip install --upgrade setuptools && \
     pip install --no-cache-dir -r requirements.txt
 
 # Get NodeJS & npm
