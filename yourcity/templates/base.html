@@ -1,0 +1,78 @@
+{% load static %}
+{% load webpack_loader %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>{% block title %}{% endblock %} | Yourcity Councilmatic</title>
+
+    <!-- Primary Meta Tags -->
+    <title>Yourcity Councilmatic</title>
+    <meta name="title" content="Yourcity Councilmatic" />
+    <meta name="description" content="Publish legislative information in an attractive, insightful interface!" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:title" content="Yourcity Councilmatic" />
+    <meta property="og:description" content="Publish legislative information in an attractive, insightful interface!" />
+    <meta property="og:image" content="" />
+
+    <!-- X (Twitter) -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="" />
+    <meta property="twitter:title" content="Yourcity Councilmatic" />
+    <meta property="twitter:description" content="Publish legislative information in an attractive, insightful interface!" />
+    <meta property="twitter:image" content="" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.png' %}">
+    
+    <!-- Styles -->
+    {% render_bundle 'styles' 'css' %}
+    
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- Skip link for accessibility -->
+    <a class="visually-hidden-focusable" href="#main-content">Skip to main content</a>
+    
+    <!-- Main content -->
+    <main id="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light mt-5">
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Yourcity Councilmatic</h5>
+                    <p class="mb-0">Part of the <a href="https://www.councilmatic.org" target="_blank" rel="noopener" class="text-light">Councilmatic family</a>.</p>
+                </div>
+                
+            <hr class="my-3">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <small>&copy; {% now "Y" %} Yourcity Councilmatic. All rights reserved.</small>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <small>
+                        <a href="#" class="text-light me-3">Privacy Policy</a>
+                        <a href="#" class="text-light">Terms of Service</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    {% render_bundle 'main' 'js' %}
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

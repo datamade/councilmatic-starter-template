@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="p-5 my-4 bg-secondary-subtle rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Hello, world! 👋</h1>
+                <p class="col-md-8 fs-4">Welcome to your new Councilmatic instance.</p>
+                <p>Your database contains:</p>
+                <div class="row">
+                    <div class="col"><span class="fs-1 fw-bold">{{ bill_count }}</span><br /><small> Bills</small></div>
+                    <div class="col"><span class="fs-1 fw-bold">{{ event_count }}</span><br /><small> Events</small></div>
+                    <div class="col"><span class="fs-1 fw-bold">{{ person_count }}</span><br /><small> People</small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

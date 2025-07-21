@@ -1,0 +1,165 @@
+// Import Bootstrap functions and variables first
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+// Customize Bootstrap variables here
+:root {
+  --bs-primary: #0066cc;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+}
+
+// Custom color scheme for your city
+$primary: #0066cc;        // Customize this for your city's brand color
+$secondary: #6c757d;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+
+// Font customizations
+$font-family-sans-serif: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+// Import Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+// Custom styles for Councilmatic
+body {
+  font-family: $font-family-sans-serif;
+  line-height: 1.6;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  
+  img {
+    height: 40px;
+    width: auto;
+  }
+}
+
+// Skip link for accessibility
+.visually-hidden-focusable {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  
+  &:focus {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: auto !important;
+    height: auto !important;
+    padding: 0.5rem 1rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+    background-color: $primary;
+    color: white;
+    text-decoration: none;
+    z-index: 1000;
+  }
+}
+
+// Bill/legislation cards
+.bill-card {
+  border-left: 4px solid $primary;
+  transition: box-shadow 0.2s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Person cards
+.person-card {
+  text-align: center;
+  
+  .person-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+  }
+}
+
+// Event/meeting cards
+.event-card {
+  border-left: 4px solid $info;
+  
+  .event-date {
+    font-weight: 600;
+    color: $primary;
+  }
+}
+
+// Search results
+.search-results {
+  .result-item {
+    border-bottom: 1px solid $light;
+    padding: 1rem 0;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  .result-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .result-meta {
+    font-size: 0.9rem;
+    color: $secondary;
+  }
+}
+
+// Footer
+footer {
+  margin-top: auto;
+  
+  a {
+    color: rgba(255, 255, 255, 0.8);
+    
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+// Responsive utilities
+@media (max-width: 768px) {
+  .navbar-nav {
+    text-align: center;
+  }
+  
+  .search-form {
+    margin-top: 1rem;
+  }
+}
+
+// Print styles
+@media print {
+  .navbar,
+  footer,
+  .btn,
+  .pagination {
+    display: none !important;
+  }
+}
