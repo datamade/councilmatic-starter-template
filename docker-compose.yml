@@ -1,10 +1,11 @@
 services:
   webpack:
+    container_name: yourcity_webpack
     build:
       context: .
       dockerfile: Dockerfile
       target: node
-    container_name: yourcity_webpack
+    platform: linux/amd64
     stdin_open: true
     ports:
       - 3000:3000
@@ -14,8 +15,9 @@ services:
     command: npm run serve
 
   app:
-    build: .
     container_name: yourcity_councilmatic
+    build: .
+    platform: linux/amd64
     depends_on:
       postgres:
         condition: service_healthy
@@ -25,7 +27,6 @@ services:
       DJANGO_MANAGEPY_MIGRATE: "on"
     volumes:
       - .:/app
-      - /Users/hannah/DataMade/django-councilmatic/:/app/django-councilmatic
     ports:
       - 8000:8000
     entrypoint: /app/docker-entrypoint.sh
@@ -34,6 +35,7 @@ services:
   postgres:
     container_name: yourcity_postgres
     image: postgis/postgis:14-3.2
+    platform: linux/amd64
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -48,8 +50,9 @@ services:
       - 32006:5432
 
   elasticsearch:
-    image: elasticsearch:7.14.2
     container_name: yourcity_elasticsearch
+    image: elasticsearch:7.14.2
+    platform: linux/amd64
     ports:
       - 9200:9200
     environment:
