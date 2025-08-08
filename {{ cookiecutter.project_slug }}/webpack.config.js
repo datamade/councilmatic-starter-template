@@ -6,8 +6,8 @@ const BundleTracker = require("webpack-bundle-tracker")
 const config = {
   context: __dirname,
   entry: {
-    main: "./{{ cookiecutter.jurisdiction_slug }}/static/js/main.js",
-    styles: "./{{ cookiecutter.jurisdiction_slug }}/static/scss/main.scss"
+    main: "./{{ cookiecutter.jurisdiction_slug }}_app/static/js/main.js",
+    styles: "./{{ cookiecutter.jurisdiction_slug }}_app/static/scss/main.scss"
   },
   output: {
     path: path.resolve(__dirname, "assets/bundles/"),
@@ -24,7 +24,7 @@ const config = {
     }),
   ],
   devServer: {
-    watchFiles: ["{{cookiecutter.module_name}}/static/**/*.js"],
+    watchFiles: ["{{ cookiecutter.jurisdiction_slug }}_app/static/**/*.js"],
     host: "0.0.0.0",
     port: 3000,
     compress: false,
