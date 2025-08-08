@@ -25,7 +25,6 @@ services:
       DJANGO_MANAGEPY_MIGRATE: "on"
     volumes:
       - .:/app
-      - /Users/hannah/DataMade/django-councilmatic/:/app/django-councilmatic
     ports:
       - 8000:8000
     entrypoint: /app/docker-entrypoint.sh
