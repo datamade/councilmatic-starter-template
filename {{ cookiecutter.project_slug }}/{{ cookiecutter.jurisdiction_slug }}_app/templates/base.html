@@ -1,4 +1,4 @@
-{% load static %}
+{% raw %}{% load static %}
 {% load webpack_loader %}
 
 <!DOCTYPE html>
@@ -7,10 +7,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>{% block title %}{% endblock %} | {{ cookiecutter.project_name }}</title>
+    <title>{% block title %}{% endblock %} | {% endraw %}{{ cookiecutter.project_name }}{% raw %}</title>
 
     <!-- Primary Meta Tags -->
-    <title>{{ cookiecutter.project_name }}</title>
+    <title>{% endraw %}{{ cookiecutter.project_name }}{% raw %}</title>
     <meta name="title" content="{{ cookiecutter.project_name }}" />
     <meta name="description" content="Publish legislative information in an attractive, insightful interface!" />
 
@@ -51,7 +51,7 @@
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>{{ cookiecutter.project_name }}</h5>
+                    <h5>{% endraw %}{{ cookiecutter.project_name }}{% raw %}</h5>
                     <p class="mb-0">Part of the <a href="https://www.councilmatic.org" target="_blank" rel="noopener" class="text-light">Councilmatic family</a>.</p>
                 </div>
                 
@@ -59,7 +59,7 @@
             
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <small>&copy; {% now "Y" %} {{ cookiecutter.project_name }}. All rights reserved.</small>
+                    <small>&copy; {% now "Y" %} {% endraw %}{{ cookiecutter.project_name }}{% raw %}. All rights reserved.</small>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <small>
@@ -75,4 +75,4 @@
     {% render_bundle 'main' 'js' %}
     {% block extra_js %}{% endblock %}
 </body>
-</html>
+</html>{% endraw %}
