@@ -1,14 +1,2 @@
 # Byte-compiled / optimized / DLL files
 .DS_Store
-
-# Settings
-.env
-settings_deployment.py
-
-# Collected Static Files
-static/**
-**/static/images/ocd-person/*.jpg
-
-__pycache__
-downloads
-webpack-stats.json

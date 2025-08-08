@@ -1,34 +1,11 @@
-FROM node:20-slim AS node
-
-COPY ./package.json package.json
-RUN npm install
-
-FROM python:3.12 AS app
-LABEL maintainer "DataMade <info@datamade.us>"
+FROM python:slim
 
 RUN apt-get update && \
-	apt-get install -y --no-install-recommends --purge postgresql-client gdal-bin && \
-	apt-get autoclean && \
-	rm -rf /var/lib/apt/lists/* && \
-	rm -rf /tmp/*
+    apt-get upgrade -y && \
+    apt-get install -y git
 
-RUN mkdir /app
-WORKDIR /app
+RUN ["pip", "install", "--no-cache-dir", "setuptools", "cookiecutter"]
 
-COPY ./requirements.txt /app/requirements.txt
-RUN pip install "pip<24.1" && \
-	pip install --upgrade setuptools && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Get NodeJS & npm
-COPY --from=node /usr/local/bin /usr/local/bin
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-
-# Get app dependencies
-COPY --from=node node_modules /app/node_modules
-
-COPY . /app
-ENV DJANGO_SECRET_KEY 'foobar'
-RUN python manage.py collectstatic --no-input
-
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
+RUN mkdir /cookiecutter
+WORKDIR /cookiecutter
+ENTRYPOINT ["cookiecutter"]

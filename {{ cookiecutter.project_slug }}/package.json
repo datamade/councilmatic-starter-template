@@ -1,7 +1,7 @@
 {
-  "name": "yourcity-councilmatic",
+  "name": "{{ cookiecutter.project_slug }}",
   "version": "1.0.0",
-  "description": "Frontend dependencies for Councilmatic",
+  "description": "Frontend dependencies for {{ cookiecutter.project_name }}",
   "scripts": {
     "build": "webpack --mode=production",
     "serve": "webpack serve --config /app/webpack.config.js --mode=development --hot --open"

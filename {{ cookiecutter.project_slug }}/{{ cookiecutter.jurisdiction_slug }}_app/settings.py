@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     "opencivicdata.core",
     "opencivicdata.legislative",
     "councilmatic_core",
-    "yourcity",
+    "{{ cookiecutter.jurisdiction_slug }}_app",
     # Search layer - Remove if search not required
     "councilmatic_search",
     "haystack",
@@ -74,12 +74,12 @@ MIDDLEWARE = [
 if DEBUG:
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
-ROOT_URLCONF = "yourcity.urls"
+ROOT_URLCONF = "{{ cookiecutter.jurisdiction_slug }}_app.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "yourcity" / "templates"],
+        "DIRS": [BASE_DIR / "{{ cookiecutter.jurisdiction_slug }}_app" / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -92,14 +92,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "yourcity.wsgi.application"
+WSGI_APPLICATION = "{{ cookiecutter.jurisdiction_slug }}_app.wsgi.application"
 
 # Database
 DATABASES = {
     "default": dj_database_url.parse(
         os.getenv(
-            "DATABASE_URL", 
-            "postgis://postgres:postgres@localhost:5432/yourcity_councilmatic"
+            "DATABASE_URL",
+            "postgis://postgres:postgres@localhost:5432/{{ cookiecutter.jurisdiction_slug }}_councilmatic",
         ),
         conn_max_age=600,
         ssl_require=True if os.getenv("POSTGRES_REQUIRE_SSL") == "True" else False,
@@ -146,7 +146,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
-    BASE_DIR / "yourcity" / "static",
+    BASE_DIR / "{{ cookiecutter.jurisdiction_slug }}_app" / "static",
 ]
 
 # Media files
@@ -187,13 +187,13 @@ HAYSTACK_CONNECTIONS = {
         "ENGINE": "haystack.backends.elasticsearch7_backend.Elasticsearch7SearchEngine",
         "URL": os.environ["SEARCH_URL"],
         "ADMIN_URL": os.environ["SEARCH_URL"],
-        "INDEX_NAME": "yourcity_councilmatic",
+        "INDEX_NAME": "{{ cookiecutter.jurisdiction_slug }}_councilmatic",
         "SILENTLY_FAIL": False,
     }
 }
 
 HAYSTACK_SIGNAL_PROCESSOR = "haystack.signals.RealtimeSignalProcessor"
 
-WAGTAIL_SITE_NAME = "Yourcity Councilmatic"
+WAGTAIL_SITE_NAME = "{{ cookiecutter.project_name }}"
 
 OCD_CITY_COUNCIL_NAME = os.getenv("OCD_CITY_COUNCIL_NAME", WAGTAIL_SITE_NAME)
