@@ -26,7 +26,7 @@ This template uses `django-councilmatic` – [a Django app](https://github.com/d
 
 - [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/)
 
-### 1. Create Your Instance!
+### 1. Create Your Instance
 
 ```bash
 # Build cookiecutter container 
@@ -37,3 +37,7 @@ docker run -it \
 	--mount type=bind,source=$(pwd),target=/cookiecutter \
 	cookiecutter gh:datamade/councilmatic-starter-template
 ```
+
+### 2. Get Customizing!
+
+Consult the README in your new project directory for next steps.
