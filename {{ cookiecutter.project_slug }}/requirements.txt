@@ -5,6 +5,7 @@ dj-database-url
 
 # Councilmatic core
 django-councilmatic[all] @ https://github.com/datamade/django-councilmatic/archive/refs/heads/5.x.zip
+pupa
 
 # Static files and frontend
 django-webpack-loader>=2.0.0

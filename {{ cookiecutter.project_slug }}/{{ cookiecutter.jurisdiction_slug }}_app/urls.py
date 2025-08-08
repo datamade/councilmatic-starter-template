@@ -18,16 +18,17 @@ urlpatterns = [
 ]
 
 # Error handlers
-handler404 = "yourcity.views.page_not_found"
-handler500 = "yourcity.views.server_error"
+handler404 = "{{ cookiecutter.jurisdiction_slug }}_app.views.page_not_found"
+handler500 = "{{ cookiecutter.jurisdiction_slug }}_app.views.server_error"
 
 # Debug toolbar and static files for development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    
+
     if "debug_toolbar" in settings.INSTALLED_APPS:
         import debug_toolbar
+
         urlpatterns = [
             path("__debug__/", include(debug_toolbar.urls)),
         ] + urlpatterns

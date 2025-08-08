@@ -6,8 +6,8 @@ const BundleTracker = require("webpack-bundle-tracker")
 const config = {
   context: __dirname,
   entry: {
-    main: "./yourcity/static/js/main.js",
-    styles: "./yourcity/static/scss/main.scss"
+    main: "./{{ cookiecutter.jurisdiction_slug }}/static/js/main.js",
+    styles: "./{{ cookiecutter.jurisdiction_slug }}/static/scss/main.scss"
   },
   output: {
     path: path.resolve(__dirname, "assets/bundles/"),

@@ -4,18 +4,18 @@ services:
       context: .
       dockerfile: Dockerfile
       target: node
-    container_name: yourcity_webpack
+    container_name: {{ cookiecutter.jurisdiction_slug }}_webpack
     stdin_open: true
     ports:
       - 3000:3000
     volumes:
       - .:/app
-      - yourcity_node_modules:/app/node_modules
+      - {{ cookiecutter.jurisdiction_slug }}_node_modules:/app/node_modules
     command: npm run serve
 
   app:
     build: .
-    container_name: yourcity_councilmatic
+    container_name: {{ cookiecutter.jurisdiction_slug }}_councilmatic
     depends_on:
       postgres:
         condition: service_healthy
@@ -32,7 +32,7 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
 
   postgres:
-    container_name: yourcity_postgres
+    container_name: {{ cookiecutter.jurisdiction_slug }}_postgres
     image: postgis/postgis:14-3.2
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -43,13 +43,13 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - yourcity_postgres_data:/var/lib/postgresql/data
+      - {{ cookiecutter.jurisdiction_slug }}_postgres_data:/var/lib/postgresql/data
     ports:
       - 32006:5432
 
   elasticsearch:
     image: elasticsearch:7.14.2
-    container_name: yourcity_elasticsearch
+    container_name: {{ cookiecutter.jurisdiction_slug }}_elasticsearch
     ports:
       - 9200:9200
     environment:
@@ -58,9 +58,9 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     mem_limit: 1g
     volumes:
-      - yourcity_es_data:/usr/share/elasticsearch/data
+      - {{ cookiecutter.jurisdiction_slug }}_es_data:/usr/share/elasticsearch/data
 
 volumes:
-  yourcity_node_modules:
-  yourcity_postgres_data:
-  yourcity_es_data:
+  {{ cookiecutter.jurisdiction_slug }}_node_modules:
+  {{ cookiecutter.jurisdiction_slug }}_postgres_data:
+  {{ cookiecutter.jurisdiction_slug }}_es_data:

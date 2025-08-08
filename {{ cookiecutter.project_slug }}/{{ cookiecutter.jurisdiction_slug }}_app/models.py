@@ -7,7 +7,7 @@ import pytz
 app_timezone = pytz.timezone(settings.TIME_ZONE)
 
 
-class YourCityBill(Bill):
+class {{ cookiecutter.jurisdiction_camel_case }}Bill(Bill):
     """
     Extend the base Bill model for city-specific functionality.
     Add any custom fields or methods specific to your city here.
@@ -20,7 +20,7 @@ class YourCityBill(Bill):
         return self.friendly_name or self.identifier
 
 
-class YourCityEvent(Event):
+class {{ cookiecutter.jurisdiction_camel_case }}Event(Event):
     """
     Extend the base Event model for city-specific functionality.
     Add any custom fields or methods specific to your city here.
@@ -30,7 +30,7 @@ class YourCityEvent(Event):
         proxy = True
 
 
-class YourCityPerson(Person):
+class {{ cookiecutter.jurisdiction_camel_case }}Person(Person):
     """
     Extend the base Person model for city-specific functionality.
     Add any custom fields or methods specific to your city here.
@@ -40,7 +40,7 @@ class YourCityPerson(Person):
         proxy = True
 
 
-class YourCityOrganization(Organization):
+class {{ cookiecutter.jurisdiction_camel_case }}Organization(Organization):
     """
     Extend the base Organization model for city-specific functionality.
     Add any custom fields or methods specific to your city here.

@@ -1,0 +1,7 @@
+{
+  "project_name": "{{ cookiecutter.project_name }}",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+  "jurisdiction_name": "Your City",
+  "jurisdiction_slug": "{{ cookiecutter.jurisdiction_name.lower().replace(' ', '_') }}",
+  "jurisdiction_camel_case": "{{ cookiecutter.jurisdiction_name.title().replace(' ', '') }}"
+}
