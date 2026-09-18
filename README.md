@@ -30,7 +30,7 @@ This template uses `django-councilmatic` – [a Django app](https://github.com/d
 
 ```bash
 # Build cookiecutter container 
-docker build github.com/datamade/councilmatic-starter-template#master -t cookiecutter:latest
+docker build 'https://github.com/datamade/councilmatic-starter-template.git#master' -t cookiecutter:latest
 
 # Generate a new project
 docker run -it \
